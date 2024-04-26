@@ -506,6 +506,10 @@ const initiateSezzlePayment = async () => {
   const initiateCardPayment = async (basket) => {
   if (!paymentInitiated) {
     const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+     if (totalAmount > 30000) {
+      showError('The total amount cannot exceed £300.00');
+      return;
+    }
     const paymentData = {
       organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
       currency: 'GBP',
