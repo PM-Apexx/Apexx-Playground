@@ -539,12 +539,11 @@ const initiateSezzlePayment = async () => {
         three_ds_version: '2.0'
       }
     };
-
-    try {
+try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
         // Open the payment form in a new window
-        window.location.href = responseData.url;
+        window.open(responseData.url, '_blank');
         paymentInitiated = true;
       } else {
         showError('Failed to initiate payment');
