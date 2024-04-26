@@ -540,8 +540,64 @@ const initiateSezzlePayment = async () => {
 try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
+        // Create the payment form dynamically
+        const paymentForm = `
+          <div class="payment-form-container">
+            <h2>Apexx Test Account</h2>
+            <p>ref_171405110<span id="random-number"></span></p>
+
+            <label for="card-number">Card Number*</label>
+            <input type="text" id="card-number" placeholder="Card Number" required>
+
+            <label for="expiry-month">Expiry Month*</label>
+            <select id="expiry-month" required>
+              <option value="">MM</option>
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <!-- Add more options for months -->
+            </select>
+
+            <label for="expiry-year">Expiry Year*</label>
+            <select id="expiry-year" required>
+              <option value="">YY</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <!-- Add more options for years -->
+            </select>
+
+            <label for="cvv">CVV*</label>
+            <input type="text" id="cvv" placeholder="CVV" required>
+
+            <button type="submit">Pay</button>
+          </div>
+        `;
+
         // Open the payment form in a new window
-        window.open('payment-form.html', '_blank', 'width=500,height=600');
+        const paymentWindow = window.open('', '_blank', 'width=500,height=600');
+        paymentWindow.document.write(`
+          <html>
+            <head>
+              <title>Payment Form</title>
+              <style>
+                /* Add your CSS styles here */
+              </style>
+            </head>
+            <body>
+              ${paymentForm}
+              <script>
+                // Generate a random 8-digit number and display it
+                var randomNumber = Math.floor(Math.random() * 90000000) + 10000000;
+                document.getElementById("random-number").textContent = randomNumber;
+
+                document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
+                  event.preventDefault();
+                  window.opener.location.href = 'payment-response.html?status=success';
+                  window.close();
+                });
+              </script>
+            </body>
+          </html>
+        `);
         paymentInitiated = true;
       } else {
         showError('Failed to initiate payment');
