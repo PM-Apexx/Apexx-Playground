@@ -542,8 +542,20 @@ const initiateSezzlePayment = async () => {
 try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
-        // Open the payment form in a new window
-        window.open(responseData.url, '_blank');
+        window.location.href = responseData.url;
+        const paymentIframe = document.getElementById('payment-iframe');
+        if (paymentIframe) {
+          paymentIframe.onload = () => {
+            paymentIframe.style.display = 'block';
+          };
+          paymentIframe.src = responseData.url;
+        } else {
+          console.error('Payment iframe not found');
+        }
+        const paymentForm = document.getElementById('payment-form');
+        if (paymentForm) {
+          paymentForm.style.display = 'block';
+        }
         paymentInitiated = true;
       } else {
         showError('Failed to initiate payment');
@@ -556,7 +568,6 @@ try {
     console.log('Payment has already been initiated.');
   }
 };
-
 const initiateSofortPayment = async (basket) => {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
