@@ -18,7 +18,11 @@
   <script>
     // Parse the status query parameter from the URL
     const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get('status');
+    const returnUrl = urlParams.get('returnUrl');
+  const status = urlParams.get('status');
+  const merchantReference = urlParams.get('merchant_reference');
+  const paymentId = urlParams.get('_id');
+  const paymentMethod = urlParams.get('payment_method');
 
     const messageElement = document.getElementById('payment-message');
 
