@@ -41,7 +41,6 @@ class ApiClient {
     }
   }
 }
-
 function handlePaymentResponse() {
   // Get the productUrl query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
