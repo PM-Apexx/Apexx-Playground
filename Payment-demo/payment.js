@@ -4,7 +4,6 @@ class ApiClient {
   }
   async sendRequest(endpoint, method = 'POST', requestData = null, endpointType = 'hosted') {
     let baseUrl;
-
     if (endpointType === 'hosted') {
       baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
     } else if (endpointType === 'bnpl') {
