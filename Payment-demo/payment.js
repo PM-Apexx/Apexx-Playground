@@ -545,7 +545,7 @@ try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
         // Create the payment form dynamically
-        const paymentForm = `
+        const paymentForm = '
           <div class="payment-form-container">
             <h2>Apexx Test Account</h2>
             <p>ref_171405110<span id="random-number"></span></p>
@@ -574,11 +574,11 @@ try {
 
             <button type="submit">Pay</button>
           </div>
-        `;
+        ';
 
         // Open the payment form in a new window
         const paymentWindow = window.open('', '_blank', 'width=500,height=600');
-        paymentWindow.document.write(`
+        paymentWindow.document.write('
           <html>
             <head>
               <title>Payment Form</title>
@@ -601,7 +601,7 @@ try {
               </script>
             </body>
           </html>
-        `);
+        ');
         paymentInitiated = true;
       } else {
         showError('Failed to initiate payment');
