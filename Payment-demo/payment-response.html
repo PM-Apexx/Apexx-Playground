@@ -23,6 +23,8 @@
     const messageElement = document.getElementById('payment-message');
 
     if (status === 'success') {
+      window.opener.basket = [];
+      window.opener.updateBasketCount();
       messageElement.textContent = 'Payment successful! Thank you for your order.';
     } else if (status === 'failed') {
       messageElement.textContent = 'Payment failed. Please try again.';
