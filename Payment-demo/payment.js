@@ -192,7 +192,7 @@ const initiateKlarnaPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: ' https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
+      success: 'https://frabjous-otter-b0244a.netlify.app/payment-response.html',
       failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?status=failed',
       cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?status=cancelled'
     },
