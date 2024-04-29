@@ -543,114 +543,19 @@ const initiateSezzlePayment = async () => {
 try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
-        // Create the payment form dynamically
-        const paymentForm = '
-          <div class="payment-form-container">
-            <h2>Apexx Test Account</h2>
-            <p>ref_171405110<span id="random-number"></span></p>
-
-            <label for="card-number">Card Number*</label>
-            <input type="text" id="card-number" placeholder="Card Number" required>
-
-            <label for="expiry-month">Expiry Month*</label>
-            <select id="expiry-month" required>
-              <option value="">MM</option>
-              <option value="01">01</option>
-              <option value="02">02</option>
-              <!-- Add more options for months -->
-            </select>
-
-            <label for="expiry-year">Expiry Year*</label>
-            <select id="expiry-year" required>
-              <option value="">YY</option>
-              <option value="23">23</option>
-              <option value="24">24</option>
-              <!-- Add more options for years -->
-            </select>
-
-            <label for="cvv">CVV*</label>
-            <input type="text" id="cvv" placeholder="CVV" required>
-
-            <button type="submit">Pay</button>
-          </div>
-        ';
-
-        // Open the payment form in a new window
-        const paymentWindow = window.open('', '_blank', 'width=500,height=600');
-        paymentWindow.document.write('
-          <html>
-            <head>
-              <title>Payment Form</title>
-              <style>
-                body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      padding: 20px;
-    }
-
-    h2 {
-      color: #333;
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 10px;
-      color: #555;
-      font-size: 16px;
-    }
-
-    input[type="text"],
-    select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-
-    button {
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 4px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .payment-form-container {
-      max-width: 400px;
-      margin: 0 auto;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-              </style>
-            </head>
-            <body>
-              ${paymentForm}
-              <script>
-                // Generate a random 8-digit number and display it
-                var randomNumber = Math.floor(Math.random() * 90000000) + 10000000;
-                document.getElementById("random-number").textContent = randomNumber;
-
-                document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
-                  event.preventDefault();
-                  window.opener.location.href = 'payment-response.html?status=success';
-                  window.close();
-                });
-              </script>
-            </body>
-          </html>
-        ');
+        const paymentIframe = document.getElementById('payment-iframe');
+        if (paymentIframe) {
+          paymentIframe.onload = () => {
+            paymentIframe.style.display = 'block';
+          };
+          paymentIframe.src = responseData.url;
+        } else {
+          console.error('Payment iframe not found');
+        }
+        const paymentForm = document.getElementById('payment-form');
+        if (paymentForm) {
+          paymentForm.style.display = 'block';
+        }
         paymentInitiated = true;
       } else {
         showError('Failed to initiate payment');
