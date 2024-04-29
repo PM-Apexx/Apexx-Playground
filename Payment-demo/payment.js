@@ -732,7 +732,7 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     }
   };
 try {
-    const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData,  'hosted');
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
     } else {
@@ -793,7 +793,7 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
               await initiateSofortPayment(basket);
               break;
             case 'klarna':
-              await initiateKlarnaPayment();
+              await initiateKlarnaPayment(basket);
               break;
             case 'bancontact':
               await initiateBancontactPayment(basket);
@@ -802,13 +802,13 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
               await initiateClearpayPayment(basket);
               break;
               case 'affirm':
-              await initiateAffirmPayment();
+              await initiateAffirmPayment(basket);
               break;
             case 'sezzle':
-              await initiateSezzlePayment();
+              await initiateSezzlePayment(basket);
               break;
             case 'zip':
-              await initiateZipPayment();
+              await initiateZipPayment(basket);
               break;
             default:
               console.error('Invalid alternative payment method selected');
