@@ -122,7 +122,7 @@ alternativeMethodLogos.forEach(logo => {
         await initiateSofortPayment(basket);
         break;
       case 'klarna':
-        await initiateKlarnaPayment();
+        await initiateKlarnaPayment(basket);
         break;
       case 'bancontact':
         await initiateBancontactPayment(basket);
@@ -131,7 +131,7 @@ alternativeMethodLogos.forEach(logo => {
         await initiateClearpayPayment(basket);
         break;
          case 'sezzle':
-        await initiateSezzlePayment();
+        await initiateSezzlePayment(basket);
         break;
       case 'zip':
         await initiateZipPayment(basket);
@@ -166,7 +166,7 @@ const displayPaymentForm = () => {
     console.error('Payment form not found');
   }
 };
-const initiateKlarnaPayment = async () => {
+const initiateKlarnaPayment = async (basket) => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
@@ -250,7 +250,7 @@ const initiateKlarnaPayment = async () => {
     showError('Error initiating Klarna payment. Please try again.');
   }
 };
-const initiateClearpayPayment = async () => {
+const initiateClearpayPayment = async (basket) => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
@@ -334,7 +334,7 @@ const initiateClearpayPayment = async () => {
     showError('Error initiating Clearpay payment. Please try again.');
   }
 };
-const initiateZipPayment = async () => {
+const initiateZipPayment = async (basket) => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
@@ -418,7 +418,7 @@ const initiateZipPayment = async () => {
     showError('Error initiating ZIP payment. Please try again.');
   }
 };   
-const initiateSezzlePayment = async () => {
+const initiateSezzlePayment = async (basket) => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
@@ -739,9 +739,9 @@ try {
       showError('Failed to initiate iDEAL payment');
     }
   } catch (error) {
-    console.error('iDEAL payment initiation failed:', error);
-    showError('Error initiating iDEAL payment. Please try again.');
-  }
+  console.error('iDEAL payment initiation failed:', error);
+  showError('Error initiating iDEAL payment. Please try again.');
+}
 };
  document.addEventListener('DOMContentLoaded', () => {
   const basketButton = document.getElementById('cart');
