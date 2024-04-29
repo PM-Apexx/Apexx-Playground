@@ -4,6 +4,7 @@ class ApiClient {
   }
   async sendRequest(endpoint, method = 'POST', requestData = null, endpointType = 'hosted') {
     let baseUrl;
+
     if (endpointType === 'hosted') {
       baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
     } else if (endpointType === 'bnpl') {
@@ -41,6 +42,7 @@ class ApiClient {
     }
   }
 }
+
 function handlePaymentResponse() {
   // Get the productUrl query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
@@ -56,6 +58,7 @@ function handlePaymentResponse() {
 
   basket = [];
 }
+
 const items = [
   {
     product_id: "12345",
@@ -122,22 +125,13 @@ alternativeMethodLogos.forEach(logo => {
         await initiateSofortPayment(basket);
         break;
       case 'klarna':
-        await initiateKlarnaPayment(basket);
+        await initiateKlarnaPayment();
         break;
       case 'bancontact':
         await initiateBancontactPayment(basket);
         break;
          case 'clearpay':
         await initiateClearpayPayment(basket);
-        break;
-         case 'sezzle':
-        await initiateSezzlePayment(basket);
-        break;
-      case 'zip':
-        await initiateZipPayment(basket);
-        break;
-         case 'affirm':
-        await initiateAffirmPayment(basket);
         break;
       default:
         console.error('Invalid alternative payment method selected');
@@ -166,7 +160,7 @@ const displayPaymentForm = () => {
     console.error('Payment form not found');
   }
 };
-const initiateKlarnaPayment = async (basket) => {
+const initiateKlarnaPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
@@ -192,9 +186,9 @@ const initiateKlarnaPayment = async (basket) => {
       ]
     },
     redirect_urls: {
-      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?status=Success',
-      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?status=failed',
-      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?status=cancelled'
+      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
+      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
+      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
     },
     items: items,
     customer: {
@@ -250,7 +244,7 @@ const initiateKlarnaPayment = async (basket) => {
     showError('Error initiating Klarna payment. Please try again.');
   }
 };
-const initiateClearpayPayment = async (basket) => {
+const initiateClearpayPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
@@ -334,7 +328,7 @@ const initiateClearpayPayment = async (basket) => {
     showError('Error initiating Clearpay payment. Please try again.');
   }
 };
-const initiateZipPayment = async (basket) => {
+const initiateZipPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
@@ -417,105 +411,18 @@ const initiateZipPayment = async (basket) => {
     console.error('ZIP payment initiation failed:', error);
     showError('Error initiating ZIP payment. Please try again.');
   }
-};   
-const initiateSezzlePayment = async (basket) => {
-  const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
-  const paymentData = {
-    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-    currency: 'USD',
-    amount: totalAmount,
-    net_amount: totalAmount,
-    capture_now: 'true',
-    dynamic_descriptor: 'Apexx Test',
-    merchant_reference: 'jL9ZJMjoYIuFIrH',
-    locale: 'EN',
-    customer_ip: '127.5.5.1',
-    user_agent: 'string',
-    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
-    shopper_interaction: 'ecommerce',
-    bnpl: {
-      payment_method: 'sezzle',
-      payment_type: '',
-      payment_type_data: [
-        {
-          key_name: 'string',
-          value: 'string'
-        }
-      ]
-    },
-    redirect_urls: {
-      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
-      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
-      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
-    },
-    items: items,
-    customer: {
-      customer_identification_number: 'string',
-      identification_type: 'SSN',
-      email: 'jong4@mailinator.com',
-      phone: '07777012356',
-      salutation: 'Mr',
-      type: 'company',
-      date_of_birth: '2020-02-02',
-      customer_number: 'string',
-      gender: 'male',
-      employment_type: 'fulltime',
-      residential_status: 'homeowner'
-    },
-    billing_address: {
-      first_name: 'Hello',
-      last_name: 'Anderson',
-      email: 'abc',
-      address: 'string',
-      city: 'Birmingham',
-      state: 'West Mids',
-      postal_code: 'B5 1ST',
-      country: 'US',
-      phone: '07777123555'
-    },
-    delivery_address: {
-      first_name: 'Tester',
-      last_name: 'McTestface',
-      phone: '07777132462',
-      salutation: 'Mr',
-      type: 'company',
-      care_of: 'string',
-      address: '38 Piccadilly',
-      address2: 'string',
-      city: 'Bradford',
-      state: 'West Yorkshire',
-      postal_code: 'BD1 3LY',
-      country: 'US',
-      method: 'delivery'
-    }
-  };
-
-  try {
-    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'bnpl');
-    if (responseData && responseData.url) {
-      window.location.href = responseData.url;
-    } else {
-      showError('Failed to initiate SEZZLE payment');
-    }
-  } catch (error) {
-    console.error('SEZZLE payment initiation failed:', error);
-    showError('Error initiating SEZZLE payment. Please try again.');
-  }
-}; 
+};        
   const initiateCardPayment = async (basket) => {
   if (!paymentInitiated) {
     const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-     if (totalAmount > 300) {
-      // Set the total amount to 300
-      const adjustedTotalAmount = 300;
     const paymentData = {
       organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
       currency: 'GBP',
-      amount: adjustedTotalAmount,
+      amount: totalAmount,
       capture_now: true,
-      dynamic_descriptor: 'Apexx Test',
-      merchant_reference: 'jL9ZJMjoYIuFIrH',
-      return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
+      dynamic_descriptor: 'Demo Merchant Test Purchase',
+      merchant_reference: 'ref_' + Date.now(),
+      return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
       webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
       transaction_type: 'first',
       duplicate_check: false,
@@ -539,7 +446,8 @@ const initiateSezzlePayment = async (basket) => {
         three_ds_version: '2.0'
       }
     };
-try {
+
+    try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
         const paymentIframe = document.getElementById('payment-iframe');
@@ -567,6 +475,7 @@ try {
     console.log('Payment has already been initiated.');
   }
 };
+
 const initiateSofortPayment = async (basket) => {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
@@ -732,16 +641,16 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     }
   };
 try {
-    const responseData = await apiClient.sendRequest('', 'POST', paymentData,  'hosted');
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData);
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
     } else {
       showError('Failed to initiate iDEAL payment');
     }
   } catch (error) {
-  console.error('iDEAL payment initiation failed:', error);
-  showError('Error initiating iDEAL payment. Please try again.');
-}
+    console.error('iDEAL payment initiation failed:', error);
+    showError('Error initiating iDEAL payment. Please try again.');
+  }
 };
  document.addEventListener('DOMContentLoaded', () => {
   const basketButton = document.getElementById('cart');
@@ -793,22 +702,13 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
               await initiateSofortPayment(basket);
               break;
             case 'klarna':
-              await initiateKlarnaPayment(basket);
+              await initiateKlarnaPayment();
               break;
             case 'bancontact':
               await initiateBancontactPayment(basket);
               break;
               case 'clearpay':
               await initiateClearpayPayment(basket);
-              break;
-              case 'affirm':
-              await initiateAffirmPayment(basket);
-              break;
-            case 'sezzle':
-              await initiateSezzlePayment(basket);
-              break;
-            case 'zip':
-              await initiateZipPayment(basket);
               break;
             default:
               console.error('Invalid alternative payment method selected');
