@@ -56,7 +56,6 @@ function handlePaymentResponse() {
 
   basket = [];
 }
-
 const items = [
   {
     product_id: "12345",
