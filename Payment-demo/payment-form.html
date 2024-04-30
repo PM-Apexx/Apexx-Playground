@@ -92,10 +92,15 @@
     document.getElementById("random-number").textContent = randomNumber;
 
     document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
-      event.preventDefault();
-      window.opener.location.href = 'payment-response.html?status=success';
-      window.close();
-    });
+    event.preventDefault();
+
+    // Clear the basket and update the count in the opener window
+    window.opener.basket = [];
+    window.opener.updateBasketCount();
+
+    window.opener.location.href = 'payment-response.html?status=success';
+    window.close();
+  });
   </script>
 </body>
 </html>
