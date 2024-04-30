@@ -451,7 +451,7 @@ const initiateZipPayment = async () => {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
         // Open the payment form in a new window
-        const paymentWindow = window.open(responseData.url, '_blank', 'width=500,height=600');
+        const paymentWindow = window.open('payment-form.html', '_blank', 'width=500,height=600');
         paymentInitiated = true;
       } else {
         showError('Failed to initiate payment');
