@@ -449,13 +449,8 @@ const initiateZipPayment = async () => {
    try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
-        const paymentIframe = document.getElementById('payment-iframe');
-        if (paymentIframe) {
-          paymentIframe.src = responseData.url;
-          paymentIframe.style.display = 'block';
-        } else {
-          console.error('Payment iframe not found');
-        }
+        // Open the payment-form.html file in a new tab
+        const paymentTab = window.open('payment-form.html', '_blank');
         paymentInitiated = true;
       } else {
         showError('Failed to initiate payment');
