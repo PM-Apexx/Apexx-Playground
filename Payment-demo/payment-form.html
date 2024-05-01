@@ -89,6 +89,12 @@
   <script>
     var randomNumber = Math.floor(Math.random() * 90000000) + 10000000;
     document.getElementById("random-number").textContent = randomNumber;
+    document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    // Send a message to the parent window to indicate form submission
+    window.parent.postMessage({ type: 'paymentFormSubmitted' }, '*');
+  });
 
   </script>
 </body>
