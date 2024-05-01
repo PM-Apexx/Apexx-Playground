@@ -446,11 +446,22 @@ const initiateZipPayment = async () => {
       }
     };
 
-   try {
+try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
-        // Open the payment-form.html file in a new tab
-        const paymentTab = window.open('payment-form.html', '_blank');
+        const paymentIframe = document.getElementById('payment-iframe');
+        if (paymentIframe) {
+          paymentIframe.onload = () => {
+            paymentIframe.style.display = 'block';
+          };
+          paymentIframe.src = responseData.url;
+        } else {
+          console.error('Payment iframe not found');
+        }
+        const paymentForm = document.getElementById('payment-form');
+        if (paymentForm) {
+          paymentForm.style.display = 'block';
+        }
         paymentInitiated = true;
       } else {
         showError('Failed to initiate payment');
