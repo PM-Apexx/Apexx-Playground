@@ -159,13 +159,6 @@ const displayPaymentForm = () => {
     console.error('Payment form not found');
   }
 };
-window.addEventListener('message', function(event) {
-  if (event.data && event.data.type === 'paymentSuccess') {
-    // Clear the basket and update the count
-    basket = [];
-    updateBasketCount();
-  }
-});
 const initiateKlarnaPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
@@ -460,14 +453,6 @@ const initiateZipPayment = async () => {
         if (paymentIframe) {
           paymentIframe.src = responseData.url;
           paymentIframe.style.display = 'block';
-
-          // Listen for form submission message from the iframe
-          window.addEventListener('message', function(event) {
-            if (event.data && event.data.type === 'paymentFormSubmitted') {
-              // Handle the payment form submission
-              handlePaymentFormSubmission();
-            }
-          });
         } else {
           console.error('Payment iframe not found');
         }
