@@ -476,26 +476,23 @@ try {
   }
 };
 
-const initiateSofortPayment = async (basket) => {
-  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-  const paymentData = {
+const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     capture_now: 'true',
     customer_ip: '10.20.0.186',
-    recurring_type: 'first',
-    amount: totalAmount.toString(), // This should be dynamic based on the basket contents
+    amount: totalAmount.toString(),
     currency: 'EUR',
     user_agent: 'string',
     locale: 'en',
     dynamic_descriptor: 'Apexx SOFORT Test',
-    merchant_reference: 'CT3455640', // Dynamically generate a reference
+    merchant_reference: 'CT3455640',
     webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
     shopper_interaction: 'ecommerce',
     sofort: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'
-      } 
+        return_url: window.location.href
+      }
     },
     customer: {
       first_name: 'AP',
@@ -506,31 +503,31 @@ const initiateSofortPayment = async (basket) => {
       address: {
         country: 'DE'
       }
-    },
-    delivery_customer: {
-      first_name: 'Ppro',
-      last_name: 'Test',
-      address: {
-        address: 'Add 1',
-        city: 'City',
-        state: 'CA',
-        postal_code: '90002',
-        country: 'DE'
-      }
     }
   };
+
   try {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
-    if (responseData && responseData.url) {
-      window.location.href = responseData.url;
-    } else {
-      showError('Failed to initiate SOFORT payment');
-    }
+    displayMessage('Payment initiated successfully. Please check your email for confirmation.'); // Success message
   } catch (error) {
-    console.error('SOFORT payment initiation failed:', error);
-    showError('Error initiating SOFORT payment. Please try again.');
+    displayMessage(`Payment failed: ${error.message}`); // Error handling
   }
-};
+}
+
+function displayMessage(message) {
+  const messageElement = document.getElementById('message-display');
+  if (!messageElement) {
+    console.error('Message display element not found on the page.');
+    return;
+  }
+  messageElement.textContent = message;
+  messageElement.style.display = 'block';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sofortButton = document.getElementById('sofort-payment-button');
+  sofortButton.addEventListener('click', () => initiateSofortPayment(basket));
+});
 
 const showError = (message) => {
   const errorElement = document.getElementById('error-message');
