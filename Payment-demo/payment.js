@@ -735,3 +735,16 @@ document.querySelectorAll('.add-to-basket').forEach(button => {
     });
   });
 }); 
+const paymentIframe = document.getElementById('payment-iframe');
+  if (paymentIframe) {
+    paymentIframe.onload = () => {
+      var style = document.createElement('style');
+      style.textContent = `
+        body { font-family: Arial, sans-serif; background-color: #f7f7f7; }
+        input, select { /* Styling for form elements */ }
+        /* Additional styles */
+      `;
+      paymentIframe.contentWindow.document.head.appendChild(style);
+    };
+  }
+});
