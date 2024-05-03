@@ -6,71 +6,75 @@
 <title>Apexx Payment Demo</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
 <style>
-  body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background: #f4f9fc;
-    color: #333;
-  }
-
-  header {
-    background: #005792;
-    color: #fff;
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: 500;
-  }
-
-  main {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 60px);
-  }
-
-  .payment-container {
-    background: white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    padding: 20px;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 480px;
-  }
-
-  .payment-header {
-    font-size: 22px;
-    color: #005792;
-    margin-bottom: 20px;
-  }
-
-  .product {
-    border-bottom: 1px solid #eee;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-  }
-
-  .product:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-    margin-bottom: 0;
-  }
-
-  .product-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    display: block;
-    margin-bottom: 10px;
-  }
-
-  .product h2, .product p {
-    margin: 0;
-    padding: 0;
-  }
-nav {
+    .page-title {
+      color: #004085; /* Dark blue color */
+      /* other styles you may want to add, like text-align, font-size, etc. */
+    }
+    #alternative-methods img.selected {
+  border: 2px solid blue;
+}
+     .payment-methods {
+      display: block;
+    }
+    
+    #alternative-methods img {
+      width: 100px;
+      height: auto;
+      margin: 10px;
+      cursor: pointer;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fcfdfe; /* Fall-back color */
+      background-size: cover;
+      background-attachment: fixed;
+      margin: 0; /* Removes default browser margins */
+      padding: 0; /* Removes default browser paddings */
+    }
+    .payment-methods h2 {
+      color: #004085; /* Dark blue color for the heading */
+    }
+    .payment-methods label {
+      color: #004085; /* Dark blue color for the labels */
+    }
+    .payment-methods button {
+      background-color: #004085; /* Dark blue color for the button background */
+      color: #FFFFFF; /* White color for the button text */
+      /* Additional button styling */
+    }
+    .payment-methods button:hover {
+      background-color: #00337d; /* A darker shade of blue for hover state */
+      /* Additional hover styling */
+    }
+    .title {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 24px;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .product-image {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #00449e; /* Example color - use your brand color */
+      color: blue;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #00337d; /* Darken button on hover for interaction feedback */
+    }
+    nav {
       display: flex;
       justify-content: flex-start;
       gap: 20px;
@@ -87,24 +91,35 @@ nav {
       color: #fff; /* White text on hover */
       background-color: #005f73;
     }
-  .add-to-basket {
-    background: #008cba;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-
-  .add-to-basket:hover {
-    background: #005792;
-  }
-  
-  .payment-methods input[type='radio'] {
-    margin-right: 10px;
-  }
-</style>
+    .basket {
+      color: #004085; /* Dark blue color */
+      /* other styles... */
+    }
+    .cart-container {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+    }
+    #cart {
+      background: url('https://cdn-icons-png.flaticon.com/512/263/263142.png') no-repeat left center; /* Replace with your actual local cart icon file path */
+      background-size: 24px 24px;
+      padding-left: 30px;
+      border: none;
+      cursor: pointer;
+      color: #333;
+    }
+    .payment-methods {
+      display: none; /* Hides payment options by default */
+    }
+    #payment-options-form {
+      display: none;
+    }
+    .product h2, 
+    .product p {
+      color: #004085; /* Dark blue color */
+      /* other styles... */
+    }
+  </style>
 </head>
 <body>
   <div class="title">APEXX PAYMENT DEMO</div>
