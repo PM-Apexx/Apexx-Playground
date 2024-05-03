@@ -1,115 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apexx Payment Demo</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-  <style>
-    .page-title {
-      color: #004085; /* Dark blue color */
-      /* other styles you may want to add, like text-align, font-size, etc. */
-    }
-    #alternative-methods img.selected {
-  border: 2px solid blue;
-}
-     .payment-methods {
-      display: block;
-    }
-    .product-image {
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  margin-bottom: 10px;
-}
-    #alternative-methods img {
-      width: 100px;
-      height: auto;
-      margin: 10px;
-      cursor: pointer;
-    }
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f7f7f7;
-      color: #333;
-      margin: 0;
-      padding: 20px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apexx Payment Demo</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #f4f9fc;
+    color: #333;
+  }
 
-    header, section {
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      padding: 20px;
-      margin-bottom: 20px;
-    }
+  header {
+    background: #005792;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+  }
 
-    .payment-methods {
+  main {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 60px);
+  }
+
+  .payment-container {
+    background: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .payment-header {
+    font-size: 22px;
+    color: #005792;
+    margin-bottom: 20px;
+  }
+
+  .product {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  .product:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .product-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .product h2, .product p {
+    margin: 0;
+    padding: 0;
+  }
+nav {
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .payment-methods button, #confirm-payment, #back-to-products {
-      background-color: #e0e0e0;
-      border: none;
-      border-radius: 4px;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .payment-methods button.active, #confirm-payment:hover, #back-to-products:hover {
-      background-color: #0056b3;
-      color: white;
-    }
-
-    form {
-      background-color: #ffffff;
+      justify-content: flex-start;
+      gap: 20px;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-
-    input[type="text"], input[type="number"], select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 6px;
-      margin-bottom: 16px;
-      border: 1px solid #cccccc;
-      border-radius: 4px;
+    nav a {
+      color: #004085; /* Darker text color for navigation links */
+      background-color: #e7e7e7; /* Light background for the links */
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: color 0.3s ease, background-color 0.3s ease;
     }
-
-    label {
-      font-weight: bold;
-      margin-bottom: 8px;
+    nav a:hover {
+      color: #fff; /* White text on hover */
+      background-color: #005f73;
     }
+  .add-to-basket {
+    background: #008cba;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
 
-    button[type="submit"], .button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    button[type="submit"]:hover, .button:hover {
-      background-color: #45a049;
-    }
-
-    @media (max-width: 400px) {
-      .payment-methods {
-        flex-direction: column;
-      }
-
-      .payment-methods button, .button {
-        width: 100%; /* Makes button full width on small screens */
-        margin-bottom: 10px;
-      }
-    }
-  </style>
+  .add-to-basket:hover {
+    background: #005792;
+  }
+  
+  .payment-methods input[type='radio'] {
+    margin-right: 10px;
+  }
+</style>
 </head>
 <body>
   <div class="title">APEXX PAYMENT DEMO</div>
