@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <style>
-    .logo-container {
+   .logo-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,7 +14,7 @@
 }
 
 .logo {
-  max-width: 200px; /* Adjust the size as needed */
+  max-width: 200px;
   height: auto;
 }
 
@@ -24,33 +24,35 @@
   font-size: 24px;
   color: #333;
 }
-    #alternative-methods img.selected {
+
+#alternative-methods img.selected {
   border: 2px solid blue;
 }
-     .payment-methods {
-      display: block;
-    }
-    
-    #alternative-methods img {
-      width: 100px;
-      height: auto;
-      margin: 10px;
-      cursor: pointer;
-    }
-    body {
-  font-family: 'Arial', sans-serif; /* Ensuring consistent font usage */
-  background-color: #fcfdfe; /* Soft, light background color */
+
+.payment-methods {
+  display: block;
+}
+
+#alternative-methods img {
+  width: 100px;
+  height: auto;
+  margin: 10px;
+  cursor: pointer;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fcfdfe;
   margin: 0;
   padding: 0;
 }
 
-/* Navigation bar */
 nav {
-      display: flex;
-      justify-content: flex-start;
-      gap: 20px;
-      padding: 20px;
-    }
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 20px;
+}
 
 nav a {
   color: #004085;
@@ -64,33 +66,33 @@ nav a:hover {
   color: #fff;
 }
 
-/* Product display */
 .products {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns for products */
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding: 20px;
 }
 
 .product {
-  text-align: center; /* Centering product info */
+  text-align: center;
   padding: 20px;
-  border: 1px solid #ddd; /* Subtle border */
-  border-radius: 8px; /* Rounded corners for modern feel */
+  border: 1px solid #ddd;
+  border-radius: 8px;
 }
 
 .product-image {
-  width: 60%; /* Responsive image width */
-  height: auto; /* Maintain aspect ratio */
+  width: 60%;
+  height: auto;
   margin-bottom: 20px;
 }
 
-.product h2, .product p {
-  color: #333; /* Darker text for better readability */
+.product h2,
+.product p {
+  color: #333;
 }
 
 button {
-  background-color: #00449e; /* Primary button color */
+  background-color: #00449e;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -99,12 +101,11 @@ button {
 }
 
 button:hover {
-  background-color: #00337d; /* Darker on hover */
+  background-color: #00337d;
 }
 
-/* Payment Methods Section */
 .payment-methods {
-  display: block; /* Ensure visibility */
+  display: block;
   padding: 20px;
   margin-top: 20px;
   border: 1px solid #ddd;
@@ -112,7 +113,7 @@ button:hover {
 }
 
 #alternative-methods img {
-  width: 50px; /* Smaller icons */
+  width: 50px;
   height: auto;
   margin: 5px;
   cursor: pointer;
@@ -120,19 +121,18 @@ button:hover {
 }
 
 #alternative-methods img:hover {
-  transform: scale(1.1); /* Slight scale on hover */
+  transform: scale(1.1);
 }
 
 #alternative-methods img.selected {
   border: 2px solid blue;
 }
 
-/* Additional button styling */
-#confirm-payment, #back-to-products {
+#confirm-payment,
+#back-to-products {
   margin-top: 10px;
 }
 
-/* Simplify the cart display */
 .cart-container {
   position: fixed;
   right: 20px;
