@@ -735,7 +735,7 @@ document.querySelectorAll('.add-to-basket').forEach(button => {
     });
   });
 }); 
-const paymentIframe = document.getElementById('payment-iframe');
+const paymentIframe = document.getElementById('payment-form');
   if (paymentIframe) {
     paymentIframe.onload = () => {
       var style = document.createElement('style');
