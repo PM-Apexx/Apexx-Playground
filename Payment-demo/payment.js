@@ -58,6 +58,7 @@ function handlePaymentResponse() {
 
   basket = [];
 }
+
 const items = [
   {
     product_id: "12345",
@@ -445,9 +446,8 @@ const initiateZipPayment = async () => {
         three_ds_version: '2.0'
       }
     };
-    transaction_css_template:'/* Frame Style - Start */@Frame-Font-Family: FSMeridianWeb;@Frame-Border-Colour: #FFFFFF;@Frame-Header-Font-Colour: #000000;@Frame-Header-Background-Colour: #FFFFFF;@Frame-Body-Font-Colour: #000000;@Frame-Body-Font-Weight: normal;  /* e.g. bold, normal, numeric (like 100) etc.*/@Frame-Body-Background-Colour: #F1F1F1;@Frame-Text-Box-Border-Colour: #F1F1F1;@Pay-Button-Background-Colour: #000000;@Pay-Button-Font-Colour: #FFFFFF;@Pay-Button-Width: 100%;@Pay-Button-Corner-Radius: 20px;@Body-Input-Corner-Radius: 20px;/* Frame Style - End *//* HTML Body Style - Start */@Body-Font-Family: FSMeridianWeb;@Body-Border-Colour: #FFFFFF;@Body-Font-Colour: #000000;@Body-Background-Colour: #FFFFFF;/* HTML Body Style - End */'
 
-try {
+    try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
         const paymentIframe = document.getElementById('payment-iframe');
@@ -475,6 +475,7 @@ try {
     console.log('Payment has already been initiated.');
   }
 };
+
 const initiateSofortPayment = async (basket) => {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
@@ -530,6 +531,7 @@ const initiateSofortPayment = async (basket) => {
     showError('Error initiating SOFORT payment. Please try again.');
   }
 };
+
 const showError = (message) => {
   const errorElement = document.getElementById('error-message');
   if (errorElement) {
@@ -732,4 +734,4 @@ document.querySelectorAll('.add-to-basket').forEach(button => {
       updateBasketCount();
     });
   });
-});
+}); 
