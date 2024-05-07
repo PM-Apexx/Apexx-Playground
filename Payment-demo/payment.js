@@ -657,7 +657,7 @@ try {
   const backButton = document.getElementById('back-to-products');
   const productsSection = document.querySelector('.products');
   const paymentOptionsSection = document.getElementById('payment-options-page');
-   onst paymentForm = document.getElementById('payment-form');
+   const paymentForm = document.getElementById('payment-form');
   if (paymentOptionsSection) {
     paymentOptionsSection.style.display = 'none';
   }
