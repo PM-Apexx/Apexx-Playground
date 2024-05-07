@@ -657,6 +657,7 @@ try {
   const backButton = document.getElementById('back-to-products');
   const productsSection = document.querySelector('.products');
   const paymentOptionsSection = document.getElementById('payment-options-page');
+   onst paymentForm = document.getElementById('payment-form');
   if (paymentOptionsSection) {
     paymentOptionsSection.style.display = 'none';
   }
@@ -680,7 +681,13 @@ try {
         paymentOptionsSection.style.display = 'none';
       }
       productsSection.style.display = 'flex';
+    paymentForm.style.display = 'none';  // Ensure the payment form is hidden when going back to products
     });
+  }
+
+  // Function to close the payment form lightbox
+  function closePaymentForm() {
+    paymentForm.style.display = 'none'; // Hide the lightbox
   }
 document.getElementById('confirm-payment').addEventListener('click', async () => {
   const selectedMethodRadio = document.querySelector('input[name="payment-method"]:checked');
