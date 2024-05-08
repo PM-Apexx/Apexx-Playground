@@ -448,27 +448,32 @@ const initiateZipPayment = async () => {
         card_holder_name: "true"
       },
       show_order_summary: "false",
-      transaction_css_template: `  /* Frame Style - Start */
-  @Frame-Font-Family: 'Arial', sans-serif;
-  @Frame-Border-Colour: #e2e8f0; /* Light grey border */
-  @Frame-Header-Font-Colour: #1a202c; /* Charcoal grey text */
-  @Frame-Header-Background-Colour: #f7fafc; /* Very light grey */
-  @Frame-Body-Font-Colour: #2d3748; /* Dark grey text */
-  @Frame-Body-Font-Weight: 400; /* Normal weight */
-  @Frame-Body-Background-Colour: #ffffff; /* White background */
-  @Frame-Text-Box-Border-Colour: #cbd5e0; /* Light grey borders for inputs */
-  @Pay-Button-Background-Colour: #005f73; /* Custom brand color */
-  @Pay-Button-Font-Colour: #ffffff; /* White text on buttons */
-  @Pay-Button-Width: 100%;
-  @Pay-Button-Corner-Radius: 5px; /* Subtly rounded corners for buttons */
-  @Body-Input-Corner-Radius: 5px; /* Consistent with button border radius */
+      transaction_css_template: `/* Frame Style - Start */
+  @Frame-Font-Family: 'Helvetica', 'Arial', sans-serif; /* Ensuring a clean, professional font is used */
+  @Frame-Border-Colour: #E0E0E0; /* Subtle border color */
+  @Frame-Header-Font-Colour: #333333; /* Darker font for better readability */
+  @Frame-Header-Background-Colour: #F7F7F7; /* Light grey background for the header */
+  @Frame-Body-Font-Colour: #333333; /* Consistency in body font color for readability */
+  @Frame-Body-Font-Weight: normal; /* Normal weight to keep text standard */
+  @Frame-Body-Background-Colour: #FFFFFF; /* Clean white background for clarity */
+  @Frame-Text-Box-Border-Colour: #CCCCCC; /* Light grey borders for text boxes */
+  @Frame-Text-Box-Background-Colour: #FFFFFF; /* White background for text fields */
+  @Frame-Text-Box-Height: 44px; /* Increased height for better interaction */
+  @Frame-Text-Box-Font-Size: 16px; /* Larger font size for ease of reading */
+  @Frame-Text-Box-Padding: 8px; /* Adequate padding inside text boxes */
+  @Pay-Button-Background-Colour: #005f73; /* Brand color for Pay button */
+  @Pay-Button-Font-Colour: #FFFFFF; /* White text for contrast */
+  @Pay-Button-Width: 100%; /* Full width for the Pay button */
+  @Pay-Button-Corner-Radius: 5px; /* Slightly rounded corners for a modern look */
+  @Pay-Button-Height: 50px; /* Taller button for better tapability */
+  @Pay-Button-Font-Size: 18px; /* Larger font size for the button text */
   /* Frame Style - End */
 
   /* HTML Body Style - Start */
-  @Body-Font-Family: 'Arial', sans-serif;
-  @Body-Border-Colour: #e2e8f0;
-  @Body-Font-Colour: #2d3748;
-  @Body-Background-Colour: #f7fafc;
+  @Body-Font-Family: 'Helvetica', 'Arial', sans-serif;
+  @Body-Border-Colour: #E0E0E0;
+  @Body-Font-Colour: #333333;
+  @Body-Background-Colour: #F7F7F7; /* Light background for the whole body for a less cluttered feel */
   /* HTML Body Style - End */`
     };
 
