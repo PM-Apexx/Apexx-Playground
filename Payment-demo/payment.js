@@ -445,9 +445,7 @@ const initiateZipPayment = async () => {
         three_ds_version: '2.0'
        },
       show_custom_fields: {
-        card_holder_name: "true",
-        address: "true",
-        address_required: "true"
+        card_holder_name: "true"
       },
       show_order_summary: "false",
       transaction_css_template: `  /* Frame Style - Start */
