@@ -5,176 +5,121 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <style>
-   .logo-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-}
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
 
-.logo {
-  max-width: 100px;
-  height: auto;
-}
-.add-to-basket {
-  padding: 10px 20px; /* More comfortable clickable area */
-  font-size: 16px;    /* Increases visibility and readability */
-  background-color: #005f73; /* Consider a more visually appealing color */
-  color: #fff;
-  border: none;
-  border-radius: 5px; /* Rounded corners for a modern look */
-  transition: background-color 0.3s ease;
-}
+    .logo {
+      max-width: 100px;
+      height: auto;
+    }
 
-.add-to-basket:hover {
-  background-color: #00485e; /* Slightly darker on hover for feedback */
-}
-.demo-title {
-  text-align: center;
-  margin-top: 10px;
-  font-size: 24px;
-  color: #333;
-}
+    .add-to-basket, button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #005f73;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
 
-#alternative-methods img.selected {
-  border: 2px solid blue;
-}
+    .add-to-basket:hover, button:hover {
+      background-color: #00485e;
+    }
 
-.payment-methods {
-  display: block;
-}
+    .demo-title {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 24px;
+      color: #333;
+    }
 
-#alternative-methods img {
-  width: 100px;
-  height: auto;
-  margin: 10px;
-  cursor: pointer;
-}
+    #alternative-methods img {
+      width: 100px;
+      height: auto;
+      margin: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
 
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #fcfdfe;
-  margin: 0;
-  padding: 0;
-}
+    #alternative-methods img:hover {
+      transform: scale(1.05);
+    }
 
-nav {
-  display: flex;
-  justify-content: flex-start;
-  gap: 20px;
-  padding: 20px;
-}
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fcfdfe;
+      margin: 0;
+      padding: 0;
+    }
 
-nav a {
-  color: #004085;
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+    nav {
+      display: flex;
+      justify-content: flex-start;
+      gap: 20px;
+      padding: 20px;
+    }
 
-nav a:hover {
-  background-color: #005f73;
-  color: #fff;
-}
+    nav a {
+      color: #004085;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-.products {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  padding: 20px;
-}
+    nav a:hover {
+      background-color: #005f73;
+      color: #fff;
+    }
 
-.product {
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);  /* Soft shadow for depth */
-  transition: box-shadow 0.3s ease;
-}
+    .payment-methods {
+      border: 1px solid #e1e1e1;
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-.product:hover {
-  box-shadow: 0 6px 10px rgba(0,0,0,0.15);  /* Slightly deeper shadow on hover */
-}
-.product-image {
-  width: 100%;  /* Full width of the container */
-  height: 200px; /* Fixed height for consistency */
-  object-fit: contain;  /* Ensures the image fits within the dimensions without stretching */
-  margin-bottom: 8px; /* Maintains space between the image and the text below */
-}
-.product h2,
-.product p {
-  color: #333;
-}
+    input[type="text"], input[type="number"], select, input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-button {
-  background-color: #005f73; /* Primary button color */
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
+    input[type="submit"] {
+      background-color: #005f73;
+      color: white;
+    }
 
-button:hover {
-  background-color: #00485e; /* Darken button on hover */
-}
+    .cart-container {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+    }
 
-/* Specific styles for Confirm and Back buttons */
-#confirm-payment, #back-to-products {
-  width: auto; /* Adjust based on your design */
-  margin: 10px 5px; /* Space between buttons */
-}
+    #cart {
+      background-size: 24px 24px;
+      padding-left: 30px;
+      border: none;
+      color: #333;
+    }
 
-.payment-methods {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #f9f9f9; /* Light background for the form area */
-}
+    fieldset {
+      border: none;
+      margin-top: 20px;
+    }
 
-/* Radio buttons and alternative payment methods */
-input[type="radio"] {
-  margin-right: 10px;
-}
-
-/* Style for alternative payment method logos */
-#alternative-methods img {
-  width: auto;
-  height: 40px; /* Standardizing logo heights */
-  margin: 0 10px; /* Uniform spacing around logos */
-  vertical-align: middle; /* Align logos with radio buttons text */
-}
-
-.cart-container {
-  position: fixed;
-  right: 20px;
-  top: 20px;
-}
-
-#cart {
-  background-size: 24px 24px;
-  padding-left: 30px;
-  border: none;
-  color: #333;
-}
-    input[type="text"], input[type="number"], select {
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: calc(100% - 22px); /* Full width taking padding and border into account */
-}
-
-input[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  background-color: #005f73; /* Matching the button colors */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-}
+    legend {
+      font-size: 18px;
+      color: #333;
+    }
   </style>
 </head>
 <body>
