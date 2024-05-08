@@ -413,11 +413,11 @@ const initiateZipPayment = async () => {
 };        
   const initiateCardPayment = async (basket) => {
   if (!paymentInitiated) {
-    const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+    //const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
     const paymentData = {
       organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
       currency: 'GBP',
-      amount: totalAmount,
+      amount: 100,
       capture_now: true,
       dynamic_descriptor: 'Demo Merchant Test Purchase',
       merchant_reference: 'jL9ZJMjoYIuFIrH',
