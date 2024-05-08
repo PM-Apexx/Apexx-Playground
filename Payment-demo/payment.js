@@ -415,11 +415,6 @@ const initiateZipPayment = async () => {
   const initiateCardPayment = async (basket) => {
   if (!paymentInitiated) {
     const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-    if (totalAmount > 1000) {
-      showError('Payment amount cannot exceed 1000. Please adjust your basket.');
-      return;
-    }
-
     const paymentData = {
       organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
       currency: 'GBP',
@@ -430,10 +425,10 @@ const initiateZipPayment = async () => {
       return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
       webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
       transaction_type: 'first',
-      duplicate_check: false,
+      duplicate_check: 'false',
       locale: 'en_GB',
       card: {
-        create_token: false
+        create_token: 'false'
       },
       billing_address: {
         first_name: 'John',
@@ -447,7 +442,7 @@ const initiateZipPayment = async () => {
         phone: '441234567890'
       },
       three_ds: {
-        three_ds_required: false,
+        three_ds_required: 'false',
         three_ds_version: '2.0'
        },
       show_custom_fields: {
