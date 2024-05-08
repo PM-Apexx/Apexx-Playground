@@ -120,7 +120,17 @@
       font-size: 18px;
       color: #333;
     }
+.products {
+  gap: 30px;  /* Adjust spacing between product cards */
+}
+ .product {
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);  /* Soft shadow for depth */
+  transition: box-shadow 0.3s ease;
+}
 
+.product:hover {
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);  /* Slightly deeper shadow on hover */
+}   
     .product-image {
   width: 100%;  /* Full width of the container */
   height: 200px; /* Fixed height for consistency */
