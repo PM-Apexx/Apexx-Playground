@@ -94,11 +94,11 @@ nav a:hover {
   box-shadow: 0 6px 10px rgba(0,0,0,0.15);  /* Slightly deeper shadow on hover */
 }
 .product-image {
-  width: 100%;
-  height: auto;
-object-fit: cover;
+  width: 100%;  /* Full width of the container */
+  height: 200px; /* Fixed height for consistency */
+  object-fit: contain;  /* Ensures the image fits within the dimensions without stretching */
+  margin-bottom: 8px; /* Maintains space between the image and the text below */
 }
-
 .product h2,
 .product p {
   color: #333;
