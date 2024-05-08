@@ -456,27 +456,28 @@ const initiateZipPayment = async () => {
         address_required: "true"
       },
       show_order_summary: "false",
-      transaction_css_template: `/* Frame Style - Start */
-        @Frame-Font-Family: FSMeridianWeb;
-        @Frame-Border-Colour: #FFFFFF;
-        @Frame-Header-Font-Colour: #000000;
-        @Frame-Header-Background-Colour: #FFFFFF;
-        @Frame-Body-Font-Colour: #000000;
-        @Frame-Body-Font-Weight: normal; /* e.g. bold, normal, numeric (like 100) etc.*/
-        @Frame-Body-Background-Colour: #F1F1F1;
-        @Frame-Text-Box-Border-Colour: #F1F1F1;
-        @Pay-Button-Background-Colour: #000000;
-        @Pay-Button-Font-Colour: #FFFFFF;
-        @Pay-Button-Width: 100%;
-        @Pay-Button-Corner-Radius: 20px;
-        @Body-Input-Corner-Radius: 20px;
-        /* Frame Style - End */
-        /* HTML Body Style - Start */
-        @Body-Font-Family: FSMeridianWeb;
-        @Body-Border-Colour: #FFFFFF;
-        @Body-Font-Colour: #000000;
-        @Body-Background-Colour: #FFFFFF;
-        /* HTML Body Style - End */`
+      transaction_css_template: `  /* Frame Style - Start */
+  @Frame-Font-Family: 'Arial', sans-serif;
+  @Frame-Border-Colour: #e2e8f0; /* Light grey border */
+  @Frame-Header-Font-Colour: #1a202c; /* Charcoal grey text */
+  @Frame-Header-Background-Colour: #f7fafc; /* Very light grey */
+  @Frame-Body-Font-Colour: #2d3748; /* Dark grey text */
+  @Frame-Body-Font-Weight: 400; /* Normal weight */
+  @Frame-Body-Background-Colour: #ffffff; /* White background */
+  @Frame-Text-Box-Border-Colour: #cbd5e0; /* Light grey borders for inputs */
+  @Pay-Button-Background-Colour: #005f73; /* Custom brand color */
+  @Pay-Button-Font-Colour: #ffffff; /* White text on buttons */
+  @Pay-Button-Width: 100%;
+  @Pay-Button-Corner-Radius: 5px; /* Subtly rounded corners for buttons */
+  @Body-Input-Corner-Radius: 5px; /* Consistent with button border radius */
+  /* Frame Style - End */
+
+  /* HTML Body Style - Start */
+  @Body-Font-Family: 'Arial', sans-serif;
+  @Body-Border-Colour: #e2e8f0;
+  @Body-Font-Colour: #2d3748;
+  @Body-Background-Colour: #f7fafc;
+  /* HTML Body Style - End */`
     };
 
     try {
