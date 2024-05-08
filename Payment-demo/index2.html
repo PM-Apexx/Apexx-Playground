@@ -104,45 +104,45 @@ nav a:hover {
   color: #333;
 }
 
-.button-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+button {
+  background-color: #005f73; /* Primary button color */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-#confirm-payment,
-#back-to-products {
-  padding: 8px 12px;
-  font-size: 14px;
+button:hover {
+  background-color: #00485e; /* Darken button on hover */
+}
+
+/* Specific styles for Confirm and Back buttons */
+#confirm-payment, #back-to-products {
+  width: auto; /* Adjust based on your design */
+  margin: 10px 5px; /* Space between buttons */
 }
 
 .payment-methods {
-  display: block;
-  padding: 20px;
-  margin-top: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9; /* Light background for the form area */
 }
 
+/* Radio buttons and alternative payment methods */
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+/* Style for alternative payment method logos */
 #alternative-methods img {
-  width: 50px;
-  height: auto;
-  margin: 5px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-#alternative-methods img:hover {
-  transform: scale(1.1);
-}
-
-#alternative-methods img.selected {
-  border: 2px solid blue;
-}
-
-#confirm-payment,
-#back-to-products {
-  margin-top: 10px;
+  width: auto;
+  height: 40px; /* Standardizing logo heights */
+  margin: 0 10px; /* Uniform spacing around logos */
+  vertical-align: middle; /* Align logos with radio buttons text */
 }
 
 .cart-container {
@@ -156,6 +156,24 @@ nav a:hover {
   padding-left: 30px;
   border: none;
   color: #333;
+}
+    input[type="text"], input[type="number"], select {
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: calc(100% - 22px); /* Full width taking padding and border into account */
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #005f73; /* Matching the button colors */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
 }
   </style>
 </head>
