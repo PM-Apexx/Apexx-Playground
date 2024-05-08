@@ -56,7 +56,9 @@ function handlePaymentResponse() {
     window.location.href = productUrl;
   }
 
+  // Clear the basket and update the basket count after successful payment
   basket = [];
+  updateBasketCount();
 }
 
 const items = [
@@ -529,6 +531,10 @@ const initiateZipPayment = async () => {
           paymentForm.style.display = 'block';
         }
         paymentInitiated = true;
+
+        // Clear the basket and update the basket count after successful payment
+        basket = [];
+        updateBasketCount();
       } else {
         showError('Failed to initiate payment');
       }
@@ -540,7 +546,6 @@ const initiateZipPayment = async () => {
     console.log('Payment has already been initiated.');
   }
 };
-
 const initiateSofortPayment = async (basket) => {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
