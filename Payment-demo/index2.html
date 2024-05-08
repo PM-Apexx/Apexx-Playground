@@ -17,7 +17,19 @@
   max-width: 100px;
   height: auto;
 }
+.add-to-basket {
+  padding: 10px 20px; /* More comfortable clickable area */
+  font-size: 16px;    /* Increases visibility and readability */
+  background-color: #005f73; /* Consider a more visually appealing color */
+  color: #fff;
+  border: none;
+  border-radius: 5px; /* Rounded corners for a modern look */
+  transition: background-color 0.3s ease;
+}
 
+.add-to-basket:hover {
+  background-color: #00485e; /* Slightly darker on hover for feedback */
+}
 .demo-title {
   text-align: center;
   margin-top: 10px;
@@ -69,21 +81,22 @@ nav a:hover {
 .products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 30px;
   padding: 20px;
 }
 
 .product {
-  text-align: center;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);  /* Soft shadow for depth */
+  transition: box-shadow 0.3s ease;
 }
 
+.product:hover {
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);  /* Slightly deeper shadow on hover */
+}
 .product-image {
-  width: 60%;
+  width: 100%;
   height: auto;
-  margin-bottom: 8px;
+object-fit: cover;
 }
 
 .product h2,
