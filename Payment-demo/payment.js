@@ -449,32 +449,67 @@ const initiateZipPayment = async () => {
       },
       show_order_summary: "false",
       transaction_css_template: `/* Frame Style - Start */
-  @Frame-Font-Family: 'Helvetica', 'Arial', sans-serif; /* Ensuring a clean, professional font is used */
-  @Frame-Border-Colour: #E0E0E0; /* Subtle border color */
-  @Frame-Header-Font-Colour: #333333; /* Darker font for better readability */
-  @Frame-Header-Background-Colour: #F7F7F7; /* Light grey background for the header */
-  @Frame-Body-Font-Colour: #333333; /* Consistency in body font color for readability */
-  @Frame-Body-Font-Weight: normal; /* Normal weight to keep text standard */
-  @Frame-Body-Background-Colour: #FFFFFF; /* Clean white background for clarity */
-  @Frame-Text-Box-Border-Colour: #CCCCCC; /* Light grey borders for text boxes */
-  @Frame-Text-Box-Background-Colour: #FFFFFF; /* White background for text fields */
-  @Frame-Text-Box-Height: 44px; /* Increased height for better interaction */
-  @Frame-Text-Box-Font-Size: 16px; /* Larger font size for ease of reading */
-  @Frame-Text-Box-Padding: 8px; /* Adequate padding inside text boxes */
-  @Pay-Button-Background-Colour: #005f73; /* Brand color for Pay button */
-  @Pay-Button-Font-Colour: #FFFFFF; /* White text for contrast */
-  @Pay-Button-Width: 100%; /* Full width for the Pay button */
-  @Pay-Button-Corner-Radius: 5px; /* Slightly rounded corners for a modern look */
-  @Pay-Button-Height: 50px; /* Taller button for better tapability */
-  @Pay-Button-Font-Size: 18px; /* Larger font size for the button text */
+  @Frame-Font-Family: FSMeridianWeb, Arial, sans-serif;
+  @Frame-Border-Colour: #FFFFFF;
+  @Frame-Header-Font-Colour: #000000;
+  @Frame-Header-Background-Colour: #FFFFFF;
+  @Frame-Body-Font-Colour: #000000;
+  @Frame-Body-Font-Weight: normal; /* e.g. bold, normal, numeric (like 100) etc.*/
+  @Frame-Body-Background-Colour: #F1F1F1;
+  @Frame-Text-Box-Border-Colour: #F1F1F1;
+  @Pay-Button-Background-Colour: #000000;
+  @Pay-Button-Font-Colour: #FFFFFF;
+  @Pay-Button-Width: 100%;
+  @Pay-Button-Corner-Radius: 20px;
+  @Body-Input-Corner-Radius: 20px;
   /* Frame Style - End */
-
   /* HTML Body Style - Start */
-  @Body-Font-Family: 'Helvetica', 'Arial', sans-serif;
-  @Body-Border-Colour: #E0E0E0;
-  @Body-Font-Colour: #333333;
-  @Body-Background-Colour: #F7F7F7; /* Light background for the whole body for a less cluttered feel */
-  /* HTML Body Style - End */`
+  @Body-Font-Family: FSMeridianWeb, Arial, sans-serif;
+  @Body-Border-Colour: #FFFFFF;
+  @Body-Font-Colour: #000000;
+  @Body-Background-Colour: #F1F1F1;
+  /* HTML Body Style - End */
+  /* Additional Styles - Start */
+  #payment-iframe {
+    font-family: FSMeridianWeb, Arial, sans-serif;
+    background-color: #F1F1F1;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  #payment-iframe input[type="text"],
+  #payment-iframe input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #F1F1F1;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  #payment-iframe input[type="submit"] {
+    width: 100%;
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 14px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  #payment-iframe input[type="submit"]:hover {
+    background-color: #333333;
+  }
+
+  #payment-iframe label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+  }
+  /* Additional Styles - End */`
     };
 
     try {
