@@ -399,7 +399,6 @@ const initiateZipPayment = async () => {
       method: 'delivery'
     }
   };
-
   try {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'bnpl');
     if (responseData && responseData.url) {
