@@ -415,6 +415,11 @@ const initiateZipPayment = async () => {
   const initiateCardPayment = async (basket) => {
   if (!paymentInitiated) {
     const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+    if (totalAmount > 1000) {
+      showError('Payment amount cannot exceed 1000. Please adjust your basket.');
+      return;
+    }
+
     const paymentData = {
       organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
       currency: 'GBP',
