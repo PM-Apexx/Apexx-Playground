@@ -420,7 +420,7 @@ const initiateZipPayment = async () => {
       amount: totalAmount,
       capture_now: true,
       dynamic_descriptor: 'Demo Merchant Test Purchase',
-      merchant_reference: 'ref_' + Date.now(),
+      merchant_reference: 'jL9ZJMjoYIuFIrH',
       return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
       webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
       transaction_type: 'first',
