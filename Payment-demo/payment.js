@@ -462,8 +462,8 @@ const initiateZipPayment = async () => {
   @Pay-Button-Background-Colour: #000000;
   @Pay-Button-Font-Colour: #FFFFFF;
   @Pay-Button-Width: 100%;
-  @Pay-Button-Corner-Radius: 20px;
-  @Body-Input-Corner-Radius: 20px;
+  @Pay-Button-Corner-Radius: 40px;
+  @Body-Input-Corner-Radius: 40px;
   /* Frame Style - End */
   /* HTML Body Style - Start */
   @Body-Font-Family: FSMeridianWeb, Arial, sans-serif;
@@ -483,11 +483,11 @@ const initiateZipPayment = async () => {
   #payment-iframe input[type="text"],
   #payment-iframe input[type="number"] {
     width: 100%;
-    padding: 12px;
+    padding: 20px;
     border: 1px solid #F1F1F1;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    font-size: 16px;
+    border-radius: 40px;
+    margin-bottom: 30px;
+    font-size: 20px;
   }
 
   #payment-iframe input[type="submit"] {
