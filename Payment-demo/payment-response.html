@@ -19,10 +19,10 @@
     // Parse the status query parameter from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const returnUrl = urlParams.get('returnUrl');
-  const status = urlParams.get('status');
-  const merchantReference = urlParams.get('merchant_reference');
-  const paymentId = urlParams.get('_id');
-  const paymentMethod = urlParams.get('payment_method');
+    const status = urlParams.get('status');
+    const merchantReference = urlParams.get('merchant_reference');
+    const paymentId = urlParams.get('_id');
+    const paymentMethod = urlParams.get('payment_method');
 
     const messageElement = document.getElementById('payment-message');
 
@@ -35,18 +35,18 @@
     } else if (status === 'cancelled') {
       messageElement.textContent = 'Payment cancelled.';
     } else {
-      messageElement.textContent = 'Invalid payment status.';
+      messageElement.textContent = 'Payment Successful.';
     }
 
-    // Redirect to the products page after a delay
+    // Redirect to the Wix website after a delay
     setTimeout(() => {
-      window.location.href = 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html';
+      window.location.href = 'https://pritides.wixsite.com/my-site-1';
     }, 5000);
 
     // Handle "Back to Products" button click
     const backButton = document.getElementById('back-to-products');
     backButton.addEventListener('click', () => {
-      window.location.href = 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html';
+      window.location.href = 'https://pritides.wixsite.com/my-site-1';
     });
   </script>
 </body>
