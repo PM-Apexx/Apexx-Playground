@@ -43,24 +43,6 @@ class ApiClient {
   }
 }
 
-function handlePaymentResponse() {
-  // Get the productUrl query parameter from the URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const productUrl = urlParams.get('productUrl') || 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html';
-
-  // Redirect back to the products page
-  const productsSection = document.querySelector('.products');
-  if (productsSection) {
-    productsSection.style.display = 'flex';
-  } else {
-    window.location.href = productUrl;
-  }
-
-  // Clear the basket and update the basket count after successful payment
-  basket = [];
-  updateBasketCount();
-}
-
 const items = [
   {
     product_id: "12345",
@@ -103,6 +85,7 @@ const updateBasketCount = () => {
   const cartButton = document.getElementById('cart');
   cartButton.textContent = `Basket (${basket.length})`;
 };
+
 const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
 
 paymentMethodRadios.forEach(radio => {
@@ -117,27 +100,6 @@ alternativeMethodLogos.forEach(logo => {
     alternativeMethodLogos.forEach(otherLogo => otherLogo.classList.remove('selected'));
     logo.classList.add('selected');
     selectedAlternativeMethod = logo.alt; // Set selectedAlternativeMethod to the alt attribute
-
-    // Call the respective payment initiation function
-    switch (selectedAlternativeMethod.toLowerCase()) {
-      case 'ideal':
-        await initiateidealPayment(basket);
-        break;
-      case 'sofort':
-        await initiateSofortPayment(basket);
-        break;
-      case 'klarna':
-        await initiateKlarnaPayment();
-        break;
-      case 'bancontact':
-        await initiateBancontactPayment(basket);
-        break;
-         case 'clearpay':
-        await initiateClearpayPayment(basket);
-        break;
-      default:
-        console.error('Invalid alternative payment method selected');
-    }
   });
 });
 
@@ -154,14 +116,6 @@ function handlePaymentMethodChange() {
   }
 }
 
-const displayPaymentForm = () => {
-  const paymentForm = document.getElementById('payment-form');
-  if (paymentForm) {
-    paymentForm.style.display = 'block';
-  } else {
-    console.error('Payment form not found');
-  }
-};
 const initiateKlarnaPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
@@ -188,9 +142,9 @@ const initiateKlarnaPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
-      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
-      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
+      success: 'payment-success.html',
+      failed: 'payment-success.html',
+      cancelled: 'payment-success.html'
     },
     items: items,
     customer: {
@@ -246,6 +200,7 @@ const initiateKlarnaPayment = async () => {
     showError('Error initiating Klarna payment. Please try again.');
   }
 };
+
 const initiateClearpayPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
@@ -272,9 +227,9 @@ const initiateClearpayPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
-      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
-      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
+      success: 'payment-success.html',
+      failed: 'payment-success.html',
+      cancelled: 'payment-success.html'
     },
     items: items,
     customer: {
@@ -330,6 +285,7 @@ const initiateClearpayPayment = async () => {
     showError('Error initiating Clearpay payment. Please try again.');
   }
 };
+
 const initiateZipPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
@@ -356,9 +312,9 @@ const initiateZipPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
-      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
-      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
+      success: 'payment-success.html',
+      failed: 'payment-success.html',
+      cancelled: 'payment-success.html'
     },
     items: items,
     customer: {
@@ -401,6 +357,7 @@ const initiateZipPayment = async () => {
       method: 'delivery'
     }
   };
+
   try {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'bnpl');
     if (responseData && responseData.url) {
@@ -412,10 +369,10 @@ const initiateZipPayment = async () => {
     console.error('ZIP payment initiation failed:', error);
     showError('Error initiating ZIP payment. Please try again.');
   }
-};        
-  const initiateCardPayment = async (basket) => {
+};
+
+const initiateCardPayment = async (basket) => {
   if (!paymentInitiated) {
-    //const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
     const paymentData = {
       organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
       currency: 'GBP',
@@ -423,7 +380,7 @@ const initiateZipPayment = async () => {
       capture_now: true,
       dynamic_descriptor: 'Demo Merchant Test Purchase',
       merchant_reference: 'jL9ZJMjoYIuFIrH',
-      return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
+      return_url: 'payment-success.html',
       webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
       transaction_type: 'first',
       duplicate_check: 'false',
@@ -445,10 +402,10 @@ const initiateZipPayment = async () => {
       three_ds: {
         three_ds_required: 'false',
         three_ds_version: '2.0'
-       },
-      show_custom_fields: {
-        card_holder_name: "true"
       },
+      show_custom_fields: {
+        card_holder_name: "true
+          },
       show_order_summary: "false",
       transaction_css_template: `/* Frame Style - Start */
   @Frame-Font-Family: FSMeridianWeb, Arial, sans-serif;
@@ -517,19 +474,7 @@ const initiateZipPayment = async () => {
     try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
-        const paymentIframe = document.getElementById('payment-iframe');
-        if (paymentIframe) {
-          paymentIframe.onload = () => {
-            paymentIframe.style.display = 'block';
-          };
-          paymentIframe.src = responseData.url;
-        } else {
-          console.error('Payment iframe not found');
-        }
-        const paymentForm = document.getElementById('payment-form');
-        if (paymentForm) {
-          paymentForm.style.display = 'block';
-        }
+        window.open(responseData.url, '_blank', 'width=500,height=600');
         paymentInitiated = true;
 
         // Clear the basket and update the basket count after successful payment
@@ -546,6 +491,7 @@ const initiateZipPayment = async () => {
     console.log('Payment has already been initiated.');
   }
 };
+
 const initiateSofortPayment = async (basket) => {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
@@ -553,19 +499,19 @@ const initiateSofortPayment = async (basket) => {
     capture_now: 'true',
     customer_ip: '10.20.0.186',
     recurring_type: 'first',
-    amount: totalAmount.toString(), // This should be dynamic based on the basket contents
+    amount: totalAmount.toString(),
     currency: 'EUR',
     user_agent: 'string',
     locale: 'en',
     dynamic_descriptor: 'Apexx SOFORT Test',
-    merchant_reference: 'CT3455640', // Dynamically generate a reference
+    merchant_reference: 'CT3455640',
     webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
     shopper_interaction: 'ecommerce',
     sofort: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-        return_url: 'https://sandbox.apexx.global/atomic/v1/api/return'
-      } 
+        return_url: 'payment-success.html'
+      }
     },
     customer: {
       first_name: 'AP',
@@ -589,16 +535,131 @@ const initiateSofortPayment = async (basket) => {
       }
     }
   };
+
   try {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
     if (responseData && responseData.url) {
-      window.location.href = payment-response.html;
+      window.location.href = responseData.url;
     } else {
       showError('Failed to initiate SOFORT payment');
     }
   } catch (error) {
     console.error('SOFORT payment initiation failed:', error);
     showError('Error initiating SOFORT payment. Please try again.');
+  }
+};
+
+const initiateBancontactPayment = async (basket) => {
+  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+  const paymentData = {
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+    capture_now: 'true',
+    customer_ip: '10.20.0.186',
+    recurring_type: 'first',
+    amount: totalAmount.toString(),
+    currency: 'EUR',
+    user_agent: 'string',
+    locale: 'en',
+    dynamic_descriptor: 'Apexx SOFORT Test',
+    merchant_reference: 'CT34540',
+    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
+    shopper_interaction: 'ecommerce',
+    bancontact: {
+      account_holder_name: 'Test Name',
+      redirection_parameters: {
+        return_url: 'payment-success.html'
+      }
+    },
+    customer: {
+      first_name: 'AP',
+      last_name: 'Test',
+      email: 'test@test.com',
+      phone: '01234567890',
+      date_of_birth: '1994-08-11',
+      address: {
+        country: 'BE'
+      }
+    },
+    delivery_customer: {
+      first_name: 'Ppro',
+      last_name: 'Test',
+      address: {
+        address: 'Add 1',
+        city: 'City',
+        state: 'CA',
+        postal_code: '90002',
+        country: 'BE'
+      }
+    }
+  };
+
+  try {
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
+    if (responseData && responseData.url) {
+      window.location.href = responseData.url;
+    } else {
+      showError('Failed to initiate Bancontact payment');
+    }
+  } catch (error) {
+    console.error('Bancontact payment initiation failed:', error);
+    showError('Error initiating Bancontact payment. Please try again.');
+  }
+};
+
+const initiateidealPayment = async (basket) => {
+  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+  const paymentData = {
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+    capture_now: 'true',
+    customer_ip: '10.20.0.186',
+    recurring_type: 'first',
+    amount: totalAmount.toString(),
+    currency: 'EUR',
+    user_agent: 'string',
+    locale: 'en',
+    dynamic_descriptor: 'Apexx ideal Test',
+    merchant_reference: 'CT34540',
+    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
+    shopper_interaction: 'ecommerce',
+    ideal: {
+      account_holder_name: 'Test Name',
+      redirection_parameters: {
+        return_url: 'payment-success.html'
+      }
+    },
+    customer: {
+      first_name: 'AP',
+      last_name: 'Test',
+      email: 'test@test.com',
+      phone: '01234567890',
+      date_of_birth: '1994-08-11',
+      address: {
+        country: 'DE'
+      }
+    },
+    delivery_customer: {
+      first_name: 'Ppro',
+      last_name: 'Test',
+      address: {
+        address: 'Add 1',
+        city: 'City',
+        state: 'CA',
+        postal_code: '90002',
+        country: 'DE'
+      }
+    }
+  };
+
+  try {
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+    if (responseData && responseData.url) {
+      window.location.href = responseData.url;
+    } else {
+      showError('Failed to initiate iDEAL payment');
+    }
+  } catch (error) {
+    console.error('iDEAL payment initiation failed:', error);
+    showError('Error initiating iDEAL payment. Please try again.');
   }
 };
 
@@ -612,122 +673,11 @@ const showError = (message) => {
   }
 };
 
-const initiateBancontactPayment = async (basket) => {
-  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-  const paymentData = {
-    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-    capture_now: 'true',
-    customer_ip: '10.20.0.186',
-    recurring_type: 'first',
-    amount: totalAmount.toString(), // This should be dynamic based on the basket contents
-    currency: 'EUR',
-    user_agent: 'string',
-    locale: 'en',
-    dynamic_descriptor: 'Apexx SOFORT Test',
-    merchant_reference: 'CT34540', // Dynamically generate a reference
-    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
-    shopper_interaction: 'ecommerce',
-    bancontact: {
-      account_holder_name: 'Test Name',
-      redirection_parameters: {
-        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'
-      } 
-    },
-    customer: {
-      first_name: 'AP',
-      last_name: 'Test',
-      email: 'test@test.com',
-      phone: '01234567890',
-      date_of_birth: '1994-08-11',
-      address: {
-        country: 'BE'
-      }
-    },
-    delivery_customer: {
-      first_name: 'Ppro',
-      last_name: 'Test',
-      address: {
-        address: 'Add 1',
-        city: 'City',
-        state: 'CA',
-        postal_code: '90002',
-        country: 'BE'
-      }
-    }
-  };
-try {
-    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
-    if (responseData && responseData.url) {
-      window.location.href = responseData.url;
-    } else {
-      showError('Failed to initiate Bancontact payment');
-    }
-  } catch (error) {
-    console.error('Bancontact payment initiation failed:', error);
-    showError('Error initiating Bancontact payment. Please try again.');
-  }
-};
-const initiateidealPayment = async (basket) => {
-const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-const paymentData = {
-organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-    capture_now: 'true',
-    customer_ip: '10.20.0.186',
-    recurring_type: 'first',
-    amount: totalAmount.toString(), // This should be dynamic based on the basket contents
-    currency: 'EUR',
-    user_agent: 'string',
-    locale: 'en',
-    dynamic_descriptor: 'Apexx ideal Test',
-    merchant_reference: 'CT34540', // Dynamically generate a reference
-    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
-    shopper_interaction: 'ecommerce',
-    ideal: {
-      account_holder_name: 'Test Name',
-      redirection_parameters: {
-        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'
-      } 
-    },
-    customer: {
-      first_name: 'AP',
-      last_name: 'Test',
-      email: 'test@test.com',
-      phone: '01234567890',
-      date_of_birth: '1994-08-11',
-      address: {
-        country: 'DE'
-      }
-    },
-    delivery_customer: {
-      first_name: 'Ppro',
-      last_name: 'Test',
-      address: {
-        address: 'Add 1',
-        city: 'City',
-        state: 'CA',
-        postal_code: '90002',
-        country: 'DE'
-      }
-    }
-  };
-try {
-    const responseData = await apiClient.sendRequest('', 'POST', paymentData);
-    if (responseData && responseData.url) {
-      window.location.href = responseData.url;
-    } else {
-      showError('Failed to initiate iDEAL payment');
-    }
-  } catch (error) {
-    console.error('iDEAL payment initiation failed:', error);
-    showError('Error initiating iDEAL payment. Please try again.');
-  }
-};
- document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const basketButton = document.getElementById('cart');
   const backButton = document.getElementById('back-to-products');
   const productsSection = document.querySelector('.products');
   const paymentOptionsSection = document.getElementById('payment-options-page');
-  const paymentForm = document.getElementById('payment-form');
   if (paymentOptionsSection) {
     paymentOptionsSection.style.display = 'none';
   }
@@ -751,53 +701,56 @@ try {
         paymentOptionsSection.style.display = 'none';
       }
       productsSection.style.display = 'flex';
-    paymentForm.style.display = 'none';  // Ensure the payment form is hidden when going back to products
     });
   }
 
-document.getElementById('confirm-payment').addEventListener('click', async () => {
-  const selectedMethodRadio = document.querySelector('input[name="payment-method"]:checked');
-  if (selectedMethodRadio) {
-    const selectedMethod = selectedMethodRadio.value;
-    switch (selectedMethod) {
-      case 'card':
-        await initiateCardPayment(basket);
-        break;
-      case 'alternative':
-        const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
-        if (selectedAlternativeMethod) {
-          const methodName = selectedAlternativeMethod.alt.toLowerCase(); // Use the alt attribute
-          switch (methodName) {
-            case 'ideal':
-              await initiateidealPayment(basket);
-              break;
-            case 'sofort':
-              await initiateSofortPayment(basket);
-              break;
-            case 'klarna':
-              await initiateKlarnaPayment();
-              break;
-            case 'bancontact':
-              await initiateBancontactPayment(basket);
-              break;
+  document.getElementById('confirm-payment').addEventListener('click', async () => {
+    const selectedMethodRadio = document.querySelector('input[name="payment-method"]:checked');
+    if (selectedMethodRadio) {
+      const selectedMethod = selectedMethodRadio.value;
+      switch (selectedMethod) {
+        case 'card':
+          await initiateCardPayment(basket);
+          break;
+        case 'alternative':
+          const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
+          if (selectedAlternativeMethod) {
+            const methodName = selectedAlternativeMethod.alt.toLowerCase();
+            switch (methodName) {
+              case 'ideal':
+                await initiateidealPayment(basket);
+                break;
+              case 'sofort':
+                await initiateSofortPayment(basket);
+                break;
+              case 'klarna':
+                await initiateKlarnaPayment();
+                break;
+              case 'bancontact':
+                await initiateBancontactPayment(basket);
+                break;
               case 'clearpay':
-              await initiateClearpayPayment(basket);
-              break;
-            default:
-              console.error('Invalid alternative payment method selected');
+                await initiateClearpayPayment();
+                break;
+              case 'zip':
+                await initiateZipPayment();
+                break;
+              default:
+                console.error('Invalid alternative payment method selected');
+            }
+          } else {
+            console.error('No alternative payment method selected');
           }
-        } else {
-          console.error('No alternative payment method selected');
-        }
-        break;
-      default:
-        console.error('Invalid payment method selected');
+          break;
+        default:
+          console.error('Invalid payment method selected');
+      }
+    } else {
+      console.error('No payment method selected');
     }
-  } else {
-    console.error('No payment method selected');
-  }
-});
-document.querySelectorAll('.add-to-basket').forEach(button => {
+  });
+
+  document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
         name: this.getAttribute('data-name'),
@@ -807,4 +760,4 @@ document.querySelectorAll('.add-to-basket').forEach(button => {
       updateBasketCount();
     });
   });
-}); 
+});
