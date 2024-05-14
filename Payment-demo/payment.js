@@ -564,7 +564,7 @@ const initiateSofortPayment = async (basket) => {
     sofort: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-        return_url: 'http://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
+        return_url: 'https://sandbox.apexx.global/atomic/v1/api/return'
       } 
     },
     customer: {
@@ -592,7 +592,7 @@ const initiateSofortPayment = async (basket) => {
   try {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
     if (responseData && responseData.url) {
-      window.location.href = responseData.url;
+      window.location.href = payment-response.html;
     } else {
       showError('Failed to initiate SOFORT payment');
     }
