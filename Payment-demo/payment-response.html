@@ -1,47 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Payment Response</title>
+  <title>Payment Successful</title>
   <style>
-    /* Add some basic styles */
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       padding-top: 50px;
     }
+    h1 {
+      color: #4CAF50;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
-  <div id="payment-message"></div>
-  <button id="back-to-products">Back to Products</button>
+  <h1>Payment Successful!</h1>
+  <p>Thank you for your payment.</p>
+  <button onclick="goBack()">Back to Products</button>
 
   <script>
-    // Parse the status query parameter from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const returnUrl = urlParams.get('returnUrl');
-    const status = urlParams.get('status');
-    const merchantReference = urlParams.get('merchant_reference');
-    const paymentId = urlParams.get('_id');
-    const paymentMethod = urlParams.get('payment_method');
-
-    const messageElement = document.getElementById('payment-message');
-
-    if (status === 'success') {
-      window.opener.basket = [];
-      window.opener.updateBasketCount();
-      messageElement.textContent = 'Payment successful! Thank you for your order.';
-    } else if (status === 'failed') {
-      messageElement.textContent = 'Payment failed. Please try again.';
-    } else if (status === 'cancelled') {
-      messageElement.textContent = 'Payment cancelled.';
-    } else {
-      messageElement.textContent = 'Payment Successful.';
+    function goBack() {
+      window.location.href = 'index2.html';
     }
-    // Handle "Back to Products" button click
-    const backButton = document.getElementById('back-to-products');
-    backButton.addEventListener('click', () => {
-      window.location.href = 'http://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html';
-    });
   </script>
 </body>
 </html>
