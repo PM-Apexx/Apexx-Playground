@@ -547,16 +547,6 @@ const initiateSofortPayment = async (basket) => {
     showError('Error initiating SOFORT payment. Please try again.');
   }
 };
-const showError = (message) => {
-  const errorElement = document.getElementById('error-message');
-  if (errorElement) {
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
-  } else {
-    alert(message);
-  }
-};
-
 const initiateBancontactPayment = async (basket) => {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
