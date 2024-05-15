@@ -373,6 +373,7 @@ const initiateZipPayment = async () => {
 
 const initiateCardPayment = async (basket) => {
   if (!paymentInitiated) {
+    //const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
     const paymentData = {
       organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
       currency: 'GBP',
@@ -402,7 +403,7 @@ const initiateCardPayment = async (basket) => {
       three_ds: {
         three_ds_required: 'false',
         three_ds_version: '2.0'
-      },
+       },
       show_custom_fields: {
         card_holder_name: "true"
       },
@@ -474,7 +475,19 @@ const initiateCardPayment = async (basket) => {
     try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
-        window.open(responseData.url, '_blank', 'width=500,height=600');
+        const paymentIframe = document.getElementById('payment-iframe');
+        if (paymentIframe) {
+          paymentIframe.onload = () => {
+            paymentIframe.style.display = 'block';
+          };
+          paymentIframe.src = responseData.url;
+        } else {
+          console.error('Payment iframe not found');
+        }
+        const paymentForm = document.getElementById('payment-form');
+        if (paymentForm) {
+          paymentForm.style.display = 'block';
+        }
         paymentInitiated = true;
 
         // Clear the basket and update the basket count after successful payment
@@ -492,6 +505,7 @@ const initiateCardPayment = async (basket) => {
   }
 };
 
+
 const initiateSofortPayment = async (basket) => {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
@@ -499,19 +513,19 @@ const initiateSofortPayment = async (basket) => {
     capture_now: 'true',
     customer_ip: '10.20.0.186',
     recurring_type: 'first',
-    amount: totalAmount.toString(),
+    amount: totalAmount.toString(), // This should be dynamic based on the basket contents
     currency: 'EUR',
     user_agent: 'string',
     locale: 'en',
     dynamic_descriptor: 'Apexx SOFORT Test',
-    merchant_reference: 'CT3455640',
+    merchant_reference: 'CT3455640', // Dynamically generate a reference
     webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
     shopper_interaction: 'ecommerce',
     sofort: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
         return_url: 'payment-success.html'
-      }
+      } 
     },
     customer: {
       first_name: 'AP',
@@ -535,17 +549,26 @@ const initiateSofortPayment = async (basket) => {
       }
     }
   };
-
   try {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
     if (responseData && responseData.url) {
-      window.location.href = responseData.url;
+      window.location.href = payment-response.html;
     } else {
       showError('Failed to initiate SOFORT payment');
     }
   } catch (error) {
     console.error('SOFORT payment initiation failed:', error);
     showError('Error initiating SOFORT payment. Please try again.');
+  }
+};
+
+const showError = (message) => {
+  const errorElement = document.getElementById('error-message');
+  if (errorElement) {
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+  } else {
+    alert(message);
   }
 };
 
