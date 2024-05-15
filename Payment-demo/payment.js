@@ -100,9 +100,29 @@ alternativeMethodLogos.forEach(logo => {
     alternativeMethodLogos.forEach(otherLogo => otherLogo.classList.remove('selected'));
     logo.classList.add('selected');
     selectedAlternativeMethod = logo.alt; // Set selectedAlternativeMethod to the alt attribute
+
+    // Call the respective payment initiation function
+    switch (selectedAlternativeMethod.toLowerCase()) {
+      case 'ideal':
+        await initiateidealPayment(basket);
+        break;
+      case 'sofort':
+        await initiateSofortPayment(basket);
+        break;
+      case 'klarna':
+        await initiateKlarnaPayment();
+        break;
+      case 'bancontact':
+        await initiateBancontactPayment(basket);
+        break;
+         case 'clearpay':
+        await initiateClearpayPayment(basket);
+        break;
+      default:
+        console.error('Invalid alternative payment method selected');
+    }
   });
 });
-
 function handlePaymentMethodChange() {
   const alternativeMethodsDiv = document.getElementById('alternative-methods');
   const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
@@ -115,7 +135,14 @@ function handlePaymentMethodChange() {
     selectedAlternativeMethod = null;
   }
 }
-
+const displayPaymentForm = () => {
+  const paymentForm = document.getElementById('payment-form');
+  if (paymentForm) {
+    paymentForm.style.display = 'block';
+  } else {
+    console.error('Payment form not found');
+  }
+};
 const initiateKlarnaPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
@@ -146,7 +173,7 @@ const initiateKlarnaPayment = async () => {
       failed: 'payment-success.html',
       cancelled: 'payment-success.html'
     },
-    items: items,
+      items: items,
     customer: {
       customer_identification_number: 'string',
       identification_type: 'SSN',
