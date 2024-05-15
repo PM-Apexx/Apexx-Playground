@@ -535,7 +535,7 @@ const initiateSofortPayment = async (basket) => {
       }
     }
   };
-  try {
+   try {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
@@ -547,7 +547,6 @@ const initiateSofortPayment = async (basket) => {
     showError('Error initiating SOFORT payment. Please try again.');
   }
 };
-
 const showError = (message) => {
   const errorElement = document.getElementById('error-message');
   if (errorElement) {
@@ -601,8 +600,7 @@ const initiateBancontactPayment = async (basket) => {
       }
     }
   };
-
-  try {
+try {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
@@ -658,8 +656,7 @@ const initiateidealPayment = async (basket) => {
       }
     }
   };
-
-  try {
+ try {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData);
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
