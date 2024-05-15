@@ -371,127 +371,6 @@ const initiateZipPayment = async () => {
   }
 };
 
-const initiateCardPayment = async (basket) => {
-  if (!paymentInitiated) {
-    //const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-    const paymentData = {
-      organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-      currency: 'GBP',
-      amount: 100,
-      capture_now: true,
-      dynamic_descriptor: 'Demo Merchant Test Purchase',
-      merchant_reference: 'jL9ZJMjoYIuFIrH',
-      return_url: 'payment-success.html',
-      webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-      transaction_type: 'first',
-      duplicate_check: 'false',
-      locale: 'en_GB',
-      card: {
-        create_token: 'false'
-      },
-      billing_address: {
-        first_name: 'John',
-        last_name: 'Doe',
-        email: 'john.doe@example.com',
-        address: '123 Main Street',
-        city: 'London',
-        state: 'London',
-        postal_code: 'SW1A 1AA',
-        country: 'GB',
-        phone: '441234567890'
-      },
-      three_ds: {
-        three_ds_required: 'false',
-        three_ds_version: '2.0'
-       },
-      show_custom_fields: {
-        card_holder_name: "true"
-      },
-      show_order_summary: "false",
-      transaction_css_template: `/* Frame Style - Start */
-  @Frame-Font-Family: FSMeridianWeb, Arial, sans-serif;
-  @Frame-Border-Colour: #FFFFFF;
-  @Frame-Header-Font-Colour: #000000;
-  @Frame-Header-Background-Colour: #FFFFFF;
-  @Frame-Body-Font-Colour: #000000;
-  @Frame-Body-Font-Weight: normal; /* e.g. bold, normal, numeric (like 100) etc.*/
-  @Frame-Body-Background-Colour: #F1F1F1;
-  @Frame-Text-Box-Border-Colour: #F1F1F1;
-  @Pay-Button-Background-Colour: #000000;
-  @Pay-Button-Font-Colour: #FFFFFF;
-  @Pay-Button-Width: 100%;
-  @Pay-Button-Corner-Radius: 40px;
-  @Body-Input-Corner-Radius: 40px;
-  /* Frame Style - End */
-  /* HTML Body Style - Start */
-  @Body-Font-Family: FSMeridianWeb, Arial, sans-serif;
-  @Body-Border-Colour: #FFFFFF;
-  @Body-Font-Colour: #000000;
-  @Body-Background-Colour: #F1F1F1;
-  /* HTML Body Style - End */
-  /* Additional Styles - Start */
-  #payment-iframe {
-    font-family: FSMeridianWeb, Arial, sans-serif;
-    background-color: #F1F1F1;
-    border: none;
-    border-radius: 10px;
-    padding: 20px;
-  }
-
-  #payment-iframe input[type="text"],
-  #payment-iframe input[type="number"] {
-    width: 100%;
-    padding: 20px;
-    border: 1px solid #F1F1F1;
-    border-radius: 40px;
-    margin-bottom: 30px;
-    font-size: 20px;
-  }
-
-  #payment-iframe input[type="submit"] {
-    width: 100%;
-    background-color: #000000;
-    color: #FFFFFF;
-    padding: 14px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  #payment-iframe input[type="submit"]:hover {
-    background-color: #333333;
-  }
-
-  #payment-iframe label {
-    font-size: 16px;
-    font-weight: bold;
-    color: #000000;
-  }
-  /* Additional Styles - End */`
-    };
-
-     try {
-      const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
-      if (responseData && responseData.url) {
-        window.open(responseData.url, '_blank', 'width=500,height=600');
-        paymentInitiated = true;
-
-        // Clear the basket and update the basket count after successful payment
-        basket = [];
-        updateBasketCount();
-      } else {
-        showError('Failed to initiate payment');
-      }
-    } catch (error) {
-      console.error('Payment initiation failed:', error);
-      showError('Error initiating payment. Please try again.');
-    }
-  } else {
-    console.log('Payment has already been initiated.');
-  }
-};
 const initiateSofortPayment = async (basket) => {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
@@ -504,7 +383,7 @@ const initiateSofortPayment = async (basket) => {
     user_agent: 'string',
     locale: 'en',
     dynamic_descriptor: 'Apexx SOFORT Test',
-    merchant_reference: 'CT3455640', // Dynamically generate a reference
+    merchant_reference: 'jL9ZJMjoYIuFIrH', // Dynamically generate a reference
     webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
     shopper_interaction: 'ecommerce',
     sofort: {
@@ -559,7 +438,7 @@ const initiateBancontactPayment = async (basket) => {
     user_agent: 'string',
     locale: 'en',
     dynamic_descriptor: 'Apexx SOFORT Test',
-    merchant_reference: 'CT34540',
+    merchant_reference: 'jL9ZJMjoYIuFIrH',
     webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
     shopper_interaction: 'ecommerce',
     bancontact: {
@@ -615,7 +494,7 @@ const initiateidealPayment = async (basket) => {
     user_agent: 'string',
     locale: 'en',
     dynamic_descriptor: 'Apexx ideal Test',
-    merchant_reference: 'CT34540',
+    merchant_reference: 'jL9ZJMjoYIuFIrH',
     webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
     shopper_interaction: 'ecommerce',
     ideal: {
