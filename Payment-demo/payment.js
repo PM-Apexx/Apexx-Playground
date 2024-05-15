@@ -548,7 +548,7 @@ const initiateSofortPayment = async (basket) => {
     sofort: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html'
+        return_url: 'https://sandbox.apexx.global/atomic/v1/api/ppro/payment-success.html'
       } 
     },
     customer: {
