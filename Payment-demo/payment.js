@@ -472,22 +472,10 @@ const initiateCardPayment = async (basket) => {
   /* Additional Styles - End */`
     };
 
-    try {
+     try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
-        const paymentIframe = document.getElementById('payment-iframe');
-        if (paymentIframe) {
-          paymentIframe.onload = () => {
-            paymentIframe.style.display = 'block';
-          };
-          paymentIframe.src = responseData.url;
-        } else {
-          console.error('Payment iframe not found');
-        }
-        const paymentForm = document.getElementById('payment-form');
-        if (paymentForm) {
-          paymentForm.style.display = 'block';
-        }
+        window.open(responseData.url, '_blank', 'width=500,height=600');
         paymentInitiated = true;
 
         // Clear the basket and update the basket count after successful payment
@@ -504,8 +492,6 @@ const initiateCardPayment = async (basket) => {
     console.log('Payment has already been initiated.');
   }
 };
-
-
 const initiateSofortPayment = async (basket) => {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
@@ -552,7 +538,7 @@ const initiateSofortPayment = async (basket) => {
   try {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
     if (responseData && responseData.url) {
-      window.location.href = payment-response.html;
+      window.location.href = responseData.url;
     } else {
       showError('Failed to initiate SOFORT payment');
     }
