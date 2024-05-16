@@ -797,4 +797,4 @@ document.querySelectorAll('.add-to-basket').forEach(button => {
       basket.push(product);
       updateBasketCount();
     });
-  });  
+  });
