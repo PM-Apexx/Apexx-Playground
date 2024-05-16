@@ -132,7 +132,7 @@ alternativeMethodLogos.forEach(logo => {
       case 'bancontact':
         await initiateBancontactPayment(basket);
         break;
-         case 'clearpay':
+      case 'clearpay':
         await initiateClearpayPayment(basket);
         break;
       default:
@@ -369,358 +369,351 @@ const initiateZipPayment = async () => {
       salutation: 'Mr',
       type: 'company',
       date_of_birth: '2020-02-02',
-      customer_number: 'string',
-      gender: 'male',
-      employment_type: 'fulltime',
-      residential_status: 'homeowner'
-    },
-    billing_address: {
-      first_name: 'Hello',
-      last_name: 'Anderson',
-      email: 'abc',
-      address: 'string',
-      city: 'Birmingham',
-      state: 'West Mids',
-      postal_code: 'B5 1ST',
-      country: 'GB',
-      phone: '07777123555'
-    },
-    delivery_address: {
-      first_name: 'Tester',
-      last_name: 'McTestface',
-      phone: '07777132462',
-      salutation: 'Mr',
-      type: 'company',
-      care_of: 'string',
-      address: '38 Piccadilly',
-      address2: 'string',
-      city: 'Bradford',
-      state: 'West Yorkshire',
-      postal_code: 'BD1 3LY',
-      country: 'GB',
-      method: 'delivery'
-    }
-  };
-  try {
-    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'bnpl');
-    if (responseData && responseData.url) {
-      window.location.href = responseData.url;
+      customer_number:'string',
+gender: 'male',
+employment_type: 'fulltime',
+residential_status: 'homeowner'
+},
+billing_address: {
+first_name: 'Hello',
+last_name: 'Anderson',
+email: 'abc',
+address: 'string',
+city: 'Birmingham',
+state: 'West Mids',
+postal_code: 'B5 1ST',
+country: 'GB',
+phone: '07777123555'
+},
+delivery_address: {
+first_name: 'Tester',
+last_name: 'McTestface',
+phone: '07777132462',
+salutation: 'Mr',
+type: 'company',
+care_of: 'string',
+address: '38 Piccadilly',
+address2: 'string',
+city: 'Bradford',
+state: 'West Yorkshire',
+postal_code: 'BD1 3LY',
+country: 'GB',
+method: 'delivery'
+}
+};
+try {
+const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'bnpl');
+if (responseData && responseData.url) {
+window.location.href = responseData.url;
+} else {
+showError('Failed to initiate ZIP payment');
+}
+} catch (error) {
+console.error('ZIP payment initiation failed:', error);
+showError('Error initiating ZIP payment. Please try again.');
+}
+};
+const initiateCardPayment = async (basket) => {
+if (!paymentInitiated) {
+//const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+const paymentData = {
+organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+currency: 'GBP',
+amount: 100,
+capture_now: true,
+dynamic_descriptor: 'Demo Merchant Test Purchase',
+merchant_reference: 'jL9ZJMjoYIuFIrH',
+return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html',
+webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
+transaction_type: 'first',
+duplicate_check: 'false',
+locale: 'en_GB',
+card: {
+create_token: 'false'
+},
+billing_address: {
+first_name: 'John',
+last_name: 'Doe',
+email: 'john.doe@example.com',
+address: '123 Main Street',
+city: 'London',
+state: 'London',
+postal_code: 'SW1A 1AA',
+country: 'GB',
+phone: '441234567890'
+},
+three_ds: {
+three_ds_required: 'false',
+three_ds_version: '2.0'
+},
+show_custom_fields: {
+card_holder_name: "true"
+},
+show_order_summary: "false",
+transaction_css_template: `/* Frame Style - Start /
+@Frame-Font-Family: FSMeridianWeb, Arial, sans-serif;
+@Frame-Border-Colour: #FFFFFF;
+@Frame-Header-Font-Colour: #000000;
+@Frame-Header-Background-Colour: #FFFFFF;
+@Frame-Body-Font-Colour: #000000;
+@Frame-Body-Font-Weight: normal; / e.g. bold, normal, numeric (like 100) etc./
+@Frame-Body-Background-Colour: #F1F1F1;
+@Frame-Text-Box-Border-Colour: #F1F1F1;
+@Pay-Button-Background-Colour: #000000;
+@Pay-Button-Font-Colour: #FFFFFF;
+@Pay-Button-Width: 100%;
+@Pay-Button-Corner-Radius: 40px;
+@Body-Input-Corner-Radius: 40px;
+/ Frame Style - End /
+/ HTML Body Style - Start /
+@Body-Font-Family: FSMeridianWeb, Arial, sans-serif;
+@Body-Border-Colour: #FFFFFF;
+@Body-Font-Colour: #000000;
+@Body-Background-Colour: #F1F1F1;
+/ HTML Body Style - End /
+/ Additional Styles - Start */
+#payment-iframe {
+font-family: FSMeridianWeb, Arial, sans-serif;
+background-color: #F1F1F1;
+border: none;
+border-radius: 10px;
+padding: 20px;
+}
+#payment-iframe input[type="text"],
+#payment-iframe input[type="number"] {
+width: 100%;
+padding: 20px;
+border: 1px solid #F1F1F1;
+border-radius: 40px;
+margin-bottom: 30px;
+font-size: 20px;
+}
+#payment-iframe input[type="submit"] {
+width: 100%;
+background-color: #000000;
+color: #FFFFFF;
+padding: 14px;
+border: none;
+border-radius: 20px;
+cursor: pointer;
+font-size: 18px;
+font-weight: bold;
+}
+#payment-iframe input[type="submit"]:hover {
+background-color: #333333;
+}
+#payment-iframe label {
+font-size: 16px;
+font-weight: bold;
+color: #000000;
+}
+/* Additional Styles - End */`
+};
+try {
+  const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
+  if (responseData && responseData.url) {
+    const paymentIframe = document.getElementById('payment-iframe');
+    if (paymentIframe) {
+      paymentIframe.onload = () => {
+        paymentIframe.style.display = 'block';
+      };
+      paymentIframe.src = responseData.url;
     } else {
-      showError('Failed to initiate ZIP payment');
+      console.error('Payment iframe not found');
     }
-  } catch (error) {
-    console.error('ZIP payment initiation failed:', error);
-    showError('Error initiating ZIP payment. Please try again.');
-  }
-};        
-  const initiateCardPayment = async (basket) => {
-  if (!paymentInitiated) {
-    //const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-    const paymentData = {
-      organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-      currency: 'GBP',
-      amount: 100,
-      capture_now: true,
-      dynamic_descriptor: 'Demo Merchant Test Purchase',
-      merchant_reference: 'jL9ZJMjoYIuFIrH',
-      return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html',
-      webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-      transaction_type: 'first',
-      duplicate_check: 'false',
-      locale: 'en_GB',
-      card: {
-        create_token: 'false'
-      },
-      billing_address: {
-        first_name: 'John',
-        last_name: 'Doe',
-        email: 'john.doe@example.com',
-        address: '123 Main Street',
-        city: 'London',
-        state: 'London',
-        postal_code: 'SW1A 1AA',
-        country: 'GB',
-        phone: '441234567890'
-      },
-      three_ds: {
-        three_ds_required: 'false',
-        three_ds_version: '2.0'
-       },
-      show_custom_fields: {
-        card_holder_name: "true"
-      },
-      show_order_summary: "false",
-      transaction_css_template: `/* Frame Style - Start */
-  @Frame-Font-Family: FSMeridianWeb, Arial, sans-serif;
-  @Frame-Border-Colour: #FFFFFF;
-  @Frame-Header-Font-Colour: #000000;
-  @Frame-Header-Background-Colour: #FFFFFF;
-  @Frame-Body-Font-Colour: #000000;
-  @Frame-Body-Font-Weight: normal; /* e.g. bold, normal, numeric (like 100) etc.*/
-  @Frame-Body-Background-Colour: #F1F1F1;
-  @Frame-Text-Box-Border-Colour: #F1F1F1;
-  @Pay-Button-Background-Colour: #000000;
-  @Pay-Button-Font-Colour: #FFFFFF;
-  @Pay-Button-Width: 100%;
-  @Pay-Button-Corner-Radius: 40px;
-  @Body-Input-Corner-Radius: 40px;
-  /* Frame Style - End */
-  /* HTML Body Style - Start */
-  @Body-Font-Family: FSMeridianWeb, Arial, sans-serif;
-  @Body-Border-Colour: #FFFFFF;
-  @Body-Font-Colour: #000000;
-  @Body-Background-Colour: #F1F1F1;
-  /* HTML Body Style - End */
-  /* Additional Styles - Start */
-  #payment-iframe {
-    font-family: FSMeridianWeb, Arial, sans-serif;
-    background-color: #F1F1F1;
-    border: none;
-    border-radius: 10px;
-    padding: 20px;
-  }
-
-  #payment-iframe input[type="text"],
-  #payment-iframe input[type="number"] {
-    width: 100%;
-    padding: 20px;
-    border: 1px solid #F1F1F1;
-    border-radius: 40px;
-    margin-bottom: 30px;
-    font-size: 20px;
-  }
-
-  #payment-iframe input[type="submit"] {
-    width: 100%;
-    background-color: #000000;
-    color: #FFFFFF;
-    padding: 14px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  #payment-iframe input[type="submit"]:hover {
-    background-color: #333333;
-  }
-
-  #payment-iframe label {
-    font-size: 16px;
-    font-weight: bold;
-    color: #000000;
-  }
-  /* Additional Styles - End */`
-    };
-
-    try {
-      const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
-      if (responseData && responseData.url) {
-        const paymentIframe = document.getElementById('payment-iframe');
-        if (paymentIframe) {
-          paymentIframe.onload = () => {
-            paymentIframe.style.display = 'block';
-          };
-          paymentIframe.src = responseData.url;
-        } else {
-          console.error('Payment iframe not found');
-        }
-        const paymentForm = document.getElementById('payment-form');
-        if (paymentForm) {
-          paymentForm.style.display = 'block';
-        }
-        paymentInitiated = true;
-        basket = [];
-        updateBasketCount();
-      } else {
-        showError('Failed to initiate payment');
-      }
-    } catch (error) {
-      console.error('Payment initiation failed:', error);
-      showError('Error initiating payment. Please try again.');
+    const paymentForm = document.getElementById('payment-form');
+    if (paymentForm) {
+      paymentForm.style.display = 'block';
     }
+    paymentInitiated = true;
+    basket = [];
+    updateBasketCount();
   } else {
-    console.log('Payment has already been initiated.');
+    showError('Failed to initiate payment');
   }
+} catch (error) {
+  console.error('Payment initiation failed:', error);
+  showError('Error initiating payment. Please try again.');
+}
+} else {
+console.log('Payment has already been initiated.');
+}
 };
 const initiateSofortPayment = async (basket) => {
-  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-  const paymentData = {
-    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-    capture_now: 'true',
-    customer_ip: '10.20.0.186',
-    recurring_type: 'first',
-    amount: totalAmount.toString(),
-    currency: 'EUR',
-    user_agent: 'string',
-    locale: 'en',
-    dynamic_descriptor: 'Apexx SOFORT Test',
-    merchant_reference: 'CT3455640', 
-    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
-    shopper_interaction: 'ecommerce',
-    sofort: {
-      account_holder_name: 'Test Name',
-      redirection_parameters: {
-        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html'
-      } 
-    },
-    customer: {
-      first_name: 'AP',
-      last_name: 'Test',
-      email: 'test@test.com',
-      phone: '01234567890',
-      date_of_birth: '1994-08-11',
-      address: {
-        country: 'DE'
-      }
-    },
-    delivery_customer: {
-      first_name: 'Ppro',
-      last_name: 'Test',
-      address: {
-        address: 'Add 1',
-        city: 'City',
-        state: 'CA',
-        postal_code: '90002',
-        country: 'DE'
-      }
-    }
-  };
-  try {
-    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
-    if (responseData && responseData.url) {
-      window.location.href = payment-response.html;
-    } else {
-      showError('Failed to initiate SOFORT payment');
-    }
-  } catch (error) {
-    console.error('SOFORT payment initiation failed:', error);
-    showError('Error initiating SOFORT payment. Please try again.');
-  }
+const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+const paymentData = {
+organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+capture_now: 'true',
+customer_ip: '10.20.0.186',
+recurring_type: 'first',
+amount: totalAmount.toString(),
+currency: 'EUR',
+user_agent: 'string',
+locale: 'en',
+dynamic_descriptor: 'Apexx SOFORT Test',
+merchant_reference: 'CT3455640',
+webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
+shopper_interaction: 'ecommerce',
+sofort: {
+account_holder_name: 'Test Name',
+redirection_parameters: {
+return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html'
+}
+},
+customer: {
+first_name: 'AP',
+last_name: 'Test',
+email: 'test@test.com',
+phone: '01234567890',
+date_of_birth: '1994-08-11',
+address: {
+country: 'DE'
+}
+},
+delivery_customer: {
+first_name: 'Ppro',
+last_name: 'Test',
+address: {
+address: 'Add 1',
+city: 'City',
+state: 'CA',
+postal_code: '90002',
+country: 'DE'
+}
+}
 };
-
-const showError = (message) => {
-  const errorElement = document.getElementById('error-message');
-  if (errorElement) {
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
-  } else {
-    alert(message);
-  }
-};
-
-const initiateBancontactPayment = async (basket) => {
-  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-  const paymentData = {
-    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-    capture_now: 'true',
-    customer_ip: '10.20.0.186',
-    recurring_type: 'first',
-    amount: totalAmount.toString(), 
-    currency: 'EUR',
-    user_agent: 'string',
-    locale: 'en',
-    dynamic_descriptor: 'Apexx SOFORT Test',
-    merchant_reference: 'CT34540', 
-    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
-    shopper_interaction: 'ecommerce',
-    bancontact: {
-      account_holder_name: 'Test Name',
-      redirection_parameters: {
-        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'
-      } 
-    },
-    customer: {
-      first_name: 'AP',
-      last_name: 'Test',
-      email: 'test@test.com',
-      phone: '01234567890',
-      date_of_birth: '1994-08-11',
-      address: {
-        country: 'BE'
-      }
-    },
-    delivery_customer: {
-      first_name: 'Ppro',
-      last_name: 'Test',
-      address: {
-        address: 'Add 1',
-        city: 'City',
-        state: 'CA',
-        postal_code: '90002',
-        country: 'BE'
-      }
-    }
-  };
 try {
-    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
-    if (responseData && responseData.url) {
-      window.location.href = responseData.url;
-    } else {
-      showError('Failed to initiate Bancontact payment');
-    }
-  } catch (error) {
-    console.error('Bancontact payment initiation failed:', error);
-    showError('Error initiating Bancontact payment. Please try again.');
-  }
+const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
+if (responseData && responseData.url) {
+window.location.href = payment-response.html;
+} else {
+showError('Failed to initiate SOFORT payment');
+}
+} catch (error) {
+console.error('SOFORT payment initiation failed:', error);
+showError('Error initiating SOFORT payment. Please try again.');
+}
+};
+const showError = (message) => {
+const errorElement = document.getElementById('error-message');
+if (errorElement) {
+errorElement.textContent = message;
+errorElement.style.display = 'block';
+} else {
+alert(message);
+}
+};
+const initiateBancontactPayment = async (basket) => {
+const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+const paymentData = {
+organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+capture_now: 'true',
+customer_ip: '10.20.0.186',
+recurring_type: 'first',
+amount: totalAmount.toString(),
+currency: 'EUR',
+user_agent: 'string',
+locale: 'en',
+dynamic_descriptor: 'Apexx SOFORT Test',
+merchant_reference: 'CT34540',
+webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
+shopper_interaction: 'ecommerce',
+bancontact: {
+account_holder_name: 'Test Name',
+redirection_parameters: {
+return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'
+}
+},
+customer: {
+first_name: 'AP',
+last_name: 'Test',
+email: 'test@test.com',
+phone: '01234567890',
+date_of_birth: '1994-08-11',
+address: {
+country: 'BE'
+}
+},
+delivery_customer: {
+first_name: 'Ppro',
+last_name: 'Test',
+address: {
+address: 'Add 1',
+city: 'City',
+state: 'CA',
+postal_code: '90002',
+country: 'BE'
+}
+}
+};
+try {
+const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
+if (responseData && responseData.url) {
+window.location.href = responseData.url;
+} else {
+showError('Failed to initiate Bancontact payment');
+}
+} catch (error) {
+console.error('Bancontact payment initiation failed:', error);
+showError('Error initiating Bancontact payment. Please try again.');
+}
 };
 const initiateidealPayment = async (basket) => {
 const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
 const paymentData = {
 organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-    capture_now: 'true',
-    customer_ip: '10.20.0.186',
-    recurring_type: 'first',
-    amount: totalAmount.toString(),
-    currency: 'EUR',
-    user_agent: 'string',
-    locale: 'en',
-    dynamic_descriptor: 'Apexx ideal Test',
-    merchant_reference: 'CT34540', // Dynamically generate a reference
-    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
-    shopper_interaction: 'ecommerce',
-    ideal: {
-      account_holder_name: 'Test Name',
-      redirection_parameters: {
-        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html'
-      } 
-    },
-    customer: {
-      first_name: 'AP',
-      last_name: 'Test',
-      email: 'test@test.com',
-      phone: '01234567890',
-      date_of_birth: '1994-08-11',
-      address: {
-        country: 'DE'
-      }
-    },
-    delivery_customer: {
-      first_name: 'Ppro',
-      last_name: 'Test',
-      address: {
-        address: 'Add 1',
-        city: 'City',
-        state: 'CA',
-        postal_code: '90002',
-        country: 'DE'
-      }
-    }
-  };
-try {
-    const responseData = await apiClient.sendRequest('', 'POST', paymentData);
-    if (responseData && responseData.url) {
-      window.location.href = responseData.url;
-    } else {
-      showError('Failed to initiate iDEAL payment');
-    }
-  } catch (error) {
-    console.error('iDEAL payment initiation failed:', error);
-    showError('Error initiating iDEAL payment. Please try again.');
-  }
+capture_now: 'true',
+customer_ip: '10.20.0.186',
+recurring_type: 'first',
+amount: totalAmount.toString(),
+currency: 'EUR',
+user_agent: 'string',
+locale: 'en',
+dynamic_descriptor: 'Apexx ideal Test',
+merchant_reference: 'CT34540', // Dynamically generate a reference
+webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
+shopper_interaction: 'ecommerce',
+ideal: {
+account_holder_name: 'Test Name',
+redirection_parameters: {
+return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html'
+}
+},
+customer: {
+first_name: 'AP',
+last_name: 'Test',
+email: 'test@test.com',
+phone: '01234567890',
+date_of_birth: '1994-08-11',
+address: {
+country: 'DE'
+}
+},
+delivery_customer: {
+first_name: 'Ppro',
+last_name: 'Test',
+address: {
+address: 'Add 1',
+city: 'City',
+state: 'CA',
+postal_code: '90002',
+country: 'DE'
+}
+}
 };
- document.addEventListener('DOMContentLoaded', () => {
+try {
+const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+if (responseData && responseData.url) {
+window.location.href = responseData.url;
+} else {
+showError('Failed to initiate iDEAL payment');
+}
+} catch (error) {
+console.error('iDEAL payment initiation failed:', error);
+showError('Error initiating iDEAL payment. Please try again.');
+}
+};
+document.addEventListener('DOMContentLoaded', () => {
   const basketButton = document.getElementById('cart');
   const backButton = document.getElementById('back-to-products');
   const productsSection = document.querySelector('.products');
@@ -804,4 +797,4 @@ document.querySelectorAll('.add-to-basket').forEach(button => {
       basket.push(product);
       updateBasketCount();
     });
-  }); 
+  });  
