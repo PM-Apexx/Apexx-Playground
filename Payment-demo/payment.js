@@ -46,7 +46,7 @@ class ApiClient {
 function handlePaymentResponse() {
   // Get the productUrl query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
-  const productUrl = urlParams.get('productUrl') || 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html';
+  const productUrl = urlParams.get('productUrl') || 'astonishing-biscuit-616c5d.netlify.app/Payment-demo/index.html';
 
   // Redirect back to the products page
   const productsSection = document.querySelector('.products');
@@ -188,9 +188,9 @@ const initiateKlarnaPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html',
-      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html',
-      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html'
+      success: 'astonishing-biscuit-616c5d.netlify.app/Payment-demo/payment-success.html',
+      failed: 'astonishing-biscuit-616c5d.netlify.app/Payment-demo/payment-success.html',
+      cancelled: 'astonishing-biscuit-616c5d.netlify.app/Payment-demo/payment-success.html'
     },
     items: items,
     customer: {
