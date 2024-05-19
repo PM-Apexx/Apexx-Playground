@@ -798,3 +798,4 @@ document.querySelectorAll('.add-to-basket').forEach(button => {
       updateBasketCount();
     });
   });
+});
