@@ -46,7 +46,7 @@ class ApiClient {
 function handlePaymentResponse() {
   // Get the productUrl query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
-  const productUrl = urlParams.get('productUrl') || 'astonishing-biscuit-616c5d.netlify.app/Payment-demo/index.html';
+  const productUrl = urlParams.get('productUrl') || 'https://664a6d44089caa1295463df6--incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html';
 
   // Redirect back to the products page
   const productsSection = document.querySelector('.products');
