@@ -46,7 +46,7 @@ class ApiClient {
 function handlePaymentResponse() {
   // Get the productUrl query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
-  const productUrl = urlParams.get('productUrl') || 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html';
+  const productUrl = urlParams.get('productUrl') || 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html';
 
   // Redirect back to the products page
   const productsSection = document.querySelector('.products');
@@ -423,7 +423,7 @@ amount: 100,
 capture_now: true,
 dynamic_descriptor: 'Demo Merchant Test Purchase',
 merchant_reference: 'jL9ZJMjoYIuFIrH',
-return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html',
+return_url: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/payment-success.html',
 webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
 transaction_type: 'first',
 duplicate_check: 'false',
