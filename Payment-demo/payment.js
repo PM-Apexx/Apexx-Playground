@@ -46,7 +46,7 @@ class ApiClient {
 function handlePaymentResponse() {
   // Get the productUrl query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
-  const productUrl = urlParams.get('productUrl') || 'https://664a6d44089caa1295463df6--incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html';
+  const productUrl = urlParams.get('productUrl') || 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html';
 
   // Redirect back to the products page
   const productsSection = document.querySelector('.products');
@@ -676,7 +676,7 @@ shopper_interaction: 'ecommerce',
 ideal: {
 account_holder_name: 'Test Name',
 redirection_parameters: {
-return_url: 'https://664a6d44089caa1295463df6--incredible-blancmange-139f6c.netlify.app/Payment-demo/payment-success.html'
+return_url: 'hhttps://incredible-blancmange-139f6c.netlify.app/Payment-demo/payment-success.html'
 }
 },
 customer: {
