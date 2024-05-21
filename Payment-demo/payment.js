@@ -188,9 +188,9 @@ const initiateKlarnaPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: 'https://664a6d44089caa1295463df6--incredible-blancmange-139f6c.netlify.app/Payment-demo/payment-success.html',
-      failed: 'astonishing-biscuit-616c5d.netlify.app/Payment-demo/payment-success.html',
-      cancelled: 'astonishing-biscuit-616c5d.netlify.app/Payment-demo/payment-success.html'
+      success: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/payment-success.html',
+      failed: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/payment-success.html',
+      cancelled: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/payment-success.html'
     },
     items: items,
     customer: {
@@ -557,7 +557,7 @@ shopper_interaction: 'ecommerce',
 sofort: {
 account_holder_name: 'Test Name',
 redirection_parameters: {
-return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html'
+return_url: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/payment-success.html'
 }
 },
 customer: {
