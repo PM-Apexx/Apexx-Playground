@@ -153,7 +153,18 @@ function handlePaymentMethodChange() {
     selectedAlternativeMethod = null;
   }
 }
+function handlePaymentSuccess() {
+  // Hide the payment form
+  document.getElementById('payment-form').style.display = 'none';
 
+  // Show the payment success message
+  document.getElementById('payment-success').style.display = 'block';
+
+  // Redirect to the products page after a delay (e.g., 5 seconds)
+  setTimeout(() => {
+    window.location.href = 'index.html';
+  }, 5000);
+}
 const displayPaymentForm = () => {
   const paymentForm = document.getElementById('payment-form');
   if (paymentForm) {
@@ -238,6 +249,7 @@ const initiateKlarnaPayment = async () => {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'bnpl');
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
+      handlePaymentSuccess();
     } else {
       showError('Failed to initiate Klarna payment');
     }
