@@ -199,8 +199,8 @@ const initiateKlarnaPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html',
-      failed: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html',
+      success: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html?status=PENDING',
+      PENDING: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html?status=PENDING',
       cancelled:'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html'
     },
     items: items,
