@@ -200,7 +200,7 @@ const initiateKlarnaPayment = async () => {
     },
     redirect_urls: {
       success: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html',
-      PENDING: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html',
+      pending: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html',
       cancelled:'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html'
     },
     items: items,
@@ -569,7 +569,7 @@ shopper_interaction: 'ecommerce',
 sofort: {
 account_holder_name: 'Test Name',
 redirection_parameters: {
-return_url: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/payment-success.html'
+return_url: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html'
 }
 },
 customer: {
