@@ -811,3 +811,21 @@ document.querySelectorAll('.add-to-basket').forEach(button => {
     });
   });
 });
+// New functions to integrate with Netlify Functions
+async function process(data) {
+  const { apiKey, method, items } = data;
+  const apiClient = new ApiClient(apiKey);
+
+  switch (method) {
+    case 'klarna':
+      return await initiateKlarnaPayment(apiClient, items);
+    case 'clearpay':
+      return await initiateClearpayPayment(apiClient, items);
+    // Add cases for other payment methods
+    default:
+      throw new Error('Invalid payment method');
+  }
+}
+
+// Export the process function
+module.exports = { process };
