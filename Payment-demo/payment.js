@@ -199,9 +199,9 @@ const initiateKlarnaPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: 'https://incredible-blancmange-139f6c.netlify.app/payment-success.html',
-      pending: 'https://incredible-blancmange-139f6c.netlify.app/payment-success.html',
-      cancelled:'https://incredible-blancmange-139f6c.netlify.app/payment-success.html'
+      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
+      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
+      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
     },
     items: items,
     customer: {
@@ -249,7 +249,6 @@ const initiateKlarnaPayment = async () => {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'bnpl');
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
-      handlePaymentSuccess();
     } else {
       showError('Failed to initiate Klarna payment');
     }
@@ -284,9 +283,9 @@ const initiateClearpayPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html',
-      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html',
-      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html'
+      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
+      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
+      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
     },
     items: items,
     customer: {
@@ -368,9 +367,9 @@ const initiateZipPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index.html',
-      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html',
-      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-success.html'
+      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
+      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
+      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
     },
     items: items,
     customer: {
@@ -381,50 +380,51 @@ const initiateZipPayment = async () => {
       salutation: 'Mr',
       type: 'company',
       date_of_birth: '2020-02-02',
-      customer_number:'string',
-gender: 'male',
-employment_type: 'fulltime',
-residential_status: 'homeowner'
-},
-billing_address: {
-first_name: 'Hello',
-last_name: 'Anderson',
-email: 'abc',
-address: 'string',
-city: 'Birmingham',
-state: 'West Mids',
-postal_code: 'B5 1ST',
-country: 'GB',
-phone: '07777123555'
-},
-delivery_address: {
-first_name: 'Tester',
-last_name: 'McTestface',
-phone: '07777132462',
-salutation: 'Mr',
-type: 'company',
-care_of: 'string',
-address: '38 Piccadilly',
-address2: 'string',
-city: 'Bradford',
-state: 'West Yorkshire',
-postal_code: 'BD1 3LY',
-country: 'GB',
-method: 'delivery'
-}
-};
-try {
-const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'bnpl');
-if (responseData && responseData.url) {
-window.location.href = responseData.url;
-} else {
-showError('Failed to initiate ZIP payment');
-}
-} catch (error) {
-console.error('ZIP payment initiation failed:', error);
-showError('Error initiating ZIP payment. Please try again.');
-}
-};
+      customer_number: 'string',
+      gender: 'male',
+      employment_type: 'fulltime',
+      residential_status: 'homeowner'
+    },
+    billing_address: {
+      first_name: 'Hello',
+      last_name: 'Anderson',
+      email: 'abc',
+      address: 'string',
+      city: 'Birmingham',
+      state: 'West Mids',
+      postal_code: 'B5 1ST',
+      country: 'GB',
+      phone: '07777123555'
+    },
+    delivery_address: {
+      first_name: 'Tester',
+      last_name: 'McTestface',
+      phone: '07777132462',
+      salutation: 'Mr',
+      type: 'company',
+      care_of: 'string',
+      address: '38 Piccadilly',
+      address2: 'string',
+      city: 'Bradford',
+      state: 'West Yorkshire',
+      postal_code: 'BD1 3LY',
+      country: 'GB',
+      method: 'delivery'
+    }
+  };
+
+  try {
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'bnpl');
+    if (responseData && responseData.url) {
+      window.location.href = responseData.url;
+    } else {
+      showError('Failed to initiate ZIP payment');
+    }
+  } catch (error) {
+    console.error('ZIP payment initiation failed:', error);
+    showError('Error initiating ZIP payment. Please try again.');
+  }
+}; 
 const initiateCardPayment = async (basket) => {
 if (!paymentInitiated) {
 //const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
@@ -552,178 +552,169 @@ console.log('Payment has already been initiated.');
 }
 };
 const initiateSofortPayment = async (basket) => {
-const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-const paymentData = {
-organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-capture_now: 'true',
-customer_ip: '10.20.0.186',
-recurring_type: 'first',
-amount: totalAmount.toString(),
-currency: 'EUR',
-user_agent: 'string',
-locale: 'en',
-dynamic_descriptor: 'Apexx SOFORT Test',
-merchant_reference: 'CT3455640',
-webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
-shopper_interaction: 'ecommerce',
-sofort: {
-account_holder_name: 'Test Name',
-redirection_parameters: {
-return_url: 'https://incredible-blancmange-139f6c.netlify.app/Payment-demo/index.html'
-}
-},
-customer: {
-first_name: 'AP',
-last_name: 'Test',
-email: 'test@test.com',
-phone: '01234567890',
-date_of_birth: '1994-08-11',
-address: {
-country: 'DE'
-}
-},
-delivery_customer: {
-first_name: 'Ppro',
-last_name: 'Test',
-address: {
-address: 'Add 1',
-city: 'City',
-state: 'CA',
-postal_code: '90002',
-country: 'DE'
-}
-}
-};
-try {
-const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
-if (responseData && responseData.url) {
-window.location.href = payment-response.html;
-} else {
-showError('Failed to initiate SOFORT payment');
-}
-} catch (error) {
-console.error('SOFORT payment initiation failed:', error);
-showError('Error initiating SOFORT payment. Please try again.');
-}
-};
-const showError = (message) => {
-const errorElement = document.getElementById('error-message');
-if (errorElement) {
-errorElement.textContent = message;
-errorElement.style.display = 'block';
-} else {
-alert(message);
-}
+  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+  const paymentData = {
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+    capture_now: 'true',
+    customer_ip: '10.20.0.186',
+    recurring_type: 'first',
+    amount: totalAmount.toString(), // This should be dynamic based on the basket contents
+    currency: 'EUR',
+    user_agent: 'string',
+    locale: 'en',
+    dynamic_descriptor: 'Apexx SOFORT Test',
+    merchant_reference: 'CT3455640', // Dynamically generate a reference
+    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
+    shopper_interaction: 'ecommerce',
+    sofort: {
+      account_holder_name: 'Test Name',
+      redirection_parameters: {
+        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'
+      } 
+    },
+    customer: {
+      first_name: 'AP',
+      last_name: 'Test',
+      email: 'test@test.com',
+      phone: '01234567890',
+      date_of_birth: '1994-08-11',
+      address: {
+        country: 'DE'
+      }
+    },
+    delivery_customer: {
+      first_name: 'Ppro',
+      last_name: 'Test',
+      address: {
+        address: 'Add 1',
+        city: 'City',
+        state: 'CA',
+        postal_code: '90002',
+        country: 'DE'
+      }
+    }
+  };
+  try {
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
+    if (responseData && responseData.url) {
+      window.location.href = responseData.url;
+    } else {
+      showError('Failed to initiate SOFORT payment');
+    }
+  } catch (error) {
+    console.error('SOFORT payment initiation failed:', error);
+    showError('Error initiating SOFORT payment. Please try again.');
+  }
 };
 const initiateBancontactPayment = async (basket) => {
-const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-const paymentData = {
-organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-capture_now: 'true',
-customer_ip: '10.20.0.186',
-recurring_type: 'first',
-amount: totalAmount.toString(),
-currency: 'EUR',
-user_agent: 'string',
-locale: 'en',
-dynamic_descriptor: 'Apexx SOFORT Test',
-merchant_reference: 'CT34540',
-webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
-shopper_interaction: 'ecommerce',
-bancontact: {
-account_holder_name: 'Test Name',
-redirection_parameters: {
-return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'
-}
-},
-customer: {
-first_name: 'AP',
-last_name: 'Test',
-email: 'test@test.com',
-phone: '01234567890',
-date_of_birth: '1994-08-11',
-address: {
-country: 'BE'
-}
-},
-delivery_customer: {
-first_name: 'Ppro',
-last_name: 'Test',
-address: {
-address: 'Add 1',
-city: 'City',
-state: 'CA',
-postal_code: '90002',
-country: 'BE'
-}
-}
-};
+  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+  const paymentData = {
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+    capture_now: 'true',
+    customer_ip: '10.20.0.186',
+    recurring_type: 'first',
+    amount: totalAmount.toString(), // This should be dynamic based on the basket contents
+    currency: 'EUR',
+    user_agent: 'string',
+    locale: 'en',
+    dynamic_descriptor: 'Apexx SOFORT Test',
+    merchant_reference: 'CT34540', // Dynamically generate a reference
+    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
+    shopper_interaction: 'ecommerce',
+    bancontact: {
+      account_holder_name: 'Test Name',
+      redirection_parameters: {
+        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'
+      } 
+    },
+    customer: {
+      first_name: 'AP',
+      last_name: 'Test',
+      email: 'test@test.com',
+      phone: '01234567890',
+      date_of_birth: '1994-08-11',
+      address: {
+        country: 'BE'
+      }
+    },
+    delivery_customer: {
+      first_name: 'Ppro',
+      last_name: 'Test',
+      address: {
+        address: 'Add 1',
+        city: 'City',
+        state: 'CA',
+        postal_code: '90002',
+        country: 'BE'
+      }
+    }
+  };
 try {
-const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
-if (responseData && responseData.url) {
-window.location.href = responseData.url;
-} else {
-showError('Failed to initiate Bancontact payment');
-}
-} catch (error) {
-console.error('Bancontact payment initiation failed:', error);
-showError('Error initiating Bancontact payment. Please try again.');
-}
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
+    if (responseData && responseData.url) {
+      window.location.href = responseData.url;
+    } else {
+      showError('Failed to initiate Bancontact payment');
+    }
+  } catch (error) {
+    console.error('Bancontact payment initiation failed:', error);
+    showError('Error initiating Bancontact payment. Please try again.');
+  }
 };
 const initiateidealPayment = async (basket) => {
 const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
 const paymentData = {
 organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-capture_now: 'true',
-customer_ip: '10.20.0.186',
-recurring_type: 'first',
-amount: totalAmount.toString(),
-currency: 'EUR',
-user_agent: 'string',
-locale: 'en',
-dynamic_descriptor: 'Apexx ideal Test',
-merchant_reference: 'CT34540', // Dynamically generate a reference
-webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
-shopper_interaction: 'ecommerce',
-ideal: {
-account_holder_name: 'Test Name',
-redirection_parameters: {
-return_url: 'hhttps://incredible-blancmange-139f6c.netlify.app/Payment-demo/payment-success.html'
-}
-},
-customer: {
-first_name: 'AP',
-last_name: 'Test',
-email: 'test@test.com',
-phone: '01234567890',
-date_of_birth: '1994-08-11',
-address: {
-country: 'DE'
-}
-},
-delivery_customer: {
-first_name: 'Ppro',
-last_name: 'Test',
-address: {
-address: 'Add 1',
-city: 'City',
-state: 'CA',
-postal_code: '90002',
-country: 'DE'
-}
-}
-};
+    capture_now: 'true',
+    customer_ip: '10.20.0.186',
+    recurring_type: 'first',
+    amount: totalAmount.toString(), // This should be dynamic based on the basket contents
+    currency: 'EUR',
+    user_agent: 'string',
+    locale: 'en',
+    dynamic_descriptor: 'Apexx ideal Test',
+    merchant_reference: 'CT34540', // Dynamically generate a reference
+    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
+    shopper_interaction: 'ecommerce',
+    ideal: {
+      account_holder_name: 'Test Name',
+      redirection_parameters: {
+        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'
+      } 
+    },
+    customer: {
+      first_name: 'AP',
+      last_name: 'Test',
+      email: 'test@test.com',
+      phone: '01234567890',
+      date_of_birth: '1994-08-11',
+      address: {
+        country: 'DE'
+      }
+    },
+    delivery_customer: {
+      first_name: 'Ppro',
+      last_name: 'Test',
+      address: {
+        address: 'Add 1',
+        city: 'City',
+        state: 'CA',
+        postal_code: '90002',
+        country: 'DE'
+      }
+    }
+  };
 try {
-const responseData = await apiClient.sendRequest('', 'POST', paymentData);
-if (responseData && responseData.url) {
-window.location.href = responseData.url;
-} else {
-showError('Failed to initiate iDEAL payment');
-}
-} catch (error) {
-console.error('iDEAL payment initiation failed:', error);
-showError('Error initiating iDEAL payment. Please try again.');
-}
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+    if (responseData && responseData.url) {
+      window.location.href = responseData.url;
+    } else {
+      showError('Failed to initiate iDEAL payment');
+    }
+  } catch (error) {
+    console.error('iDEAL payment initiation failed:', error);
+    showError('Error initiating iDEAL payment. Please try again.');
+  }
 };
 document.addEventListener('DOMContentLoaded', () => {
   const basketButton = document.getElementById('cart');
