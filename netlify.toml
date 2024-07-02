@@ -1,1 +1,8 @@
+[build]
+  functions = "netlify/functions"
+  publish = "payment-demo"
 
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
