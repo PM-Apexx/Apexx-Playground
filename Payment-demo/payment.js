@@ -201,7 +201,7 @@ const initiateKlarnaPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
+      success: 'https://pm-apm-demo.web.app/payment-demo/payment-success.html?returnUrl=https://pm-apm-demo.web.app/payment-demo/index.html',
       failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
       cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
     },
