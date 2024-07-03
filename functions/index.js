@@ -78,3 +78,6 @@ app.post('/payment', async (req, res) => {
 
 exports.payment = functions.https.onRequest(app);
 
+
+exports.payment = functions.https.onRequest(app);
+
