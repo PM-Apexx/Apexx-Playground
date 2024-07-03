@@ -1,1 +1,13 @@
-
+{
+  "hosting": {
+    "public": "payment-demo",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "functions": {
+    "source": "functions"
+  }
+}
