@@ -47,7 +47,7 @@ class ApiClient {
 function handlePaymentResponse() {
   // Get the productUrl query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
-  const productUrl = urlParams.get('productUrl') || 'https://incredible-blancmange-139f6c.netlify.app';
+  const productUrl = urlParams.get('productUrl') || 'https://pm-demo-e0926.web.app/';
 
   // Redirect back to the products page
   const productsSection = document.querySelector('.products');
@@ -201,9 +201,9 @@ const initiateKlarnaPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: 'https://pm-apm-demo.web.app/payment-demo/payment-success.html?returnUrl=https://pm-apm-demo.web.app/payment-demo/index.html',
-      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
-      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
+      success: 'https://pm-demo-e0926.web.app/payment-demo/payment-success.html?returnUrl=https://https://pm-demo-e0926.web.app/payment-demo/index.html',
+      failed: 'https://pm-demo-e0926.web.app/Apexx-Playground/Payment-demo/payment-response.html',
+      cancelled:'https://pm-demo-e0926.web.app/Apexx-Playground/Payment-demo/payment-response.html'
     },
     items: items,
     customer: {
