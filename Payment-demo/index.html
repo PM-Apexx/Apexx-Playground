@@ -206,52 +206,28 @@
       <label>
         <input type="radio" name="payment-method" value="alternative"> Pay with other Alternative Payments
       </label>
-      <div id="alternative-methods">
-        <img src="https://getlogo.net/wp-content/uploads/2020/03/sofort-logo-vector.png" alt="SOFORT">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/IDEAL_Logo.png" alt="iDeal">
-        <img src="https://business.afterpay.com/rs/539-RJA-633/images/CP_logo_lockup_6328x2204_blackclear_png.png" alt="Clearpay">
-        <img src="https://docs.klarna.com/assets/media/502240a8-506e-44b3-84eb-d8e57609ab93/Marketing_Badge_With_Clear_Space.png" alt="Klarna">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bancontact_logo.svg/1280px-Bancontact_logo.svg.png" alt="BANCONTACT">
-        <img src="https://logowik.com/content/uploads/images/affirm9276.jpg" alt="Affirm">
-        <img src="https://logowik.com/content/uploads/images/sezzle4755.jpg" alt="Sezzle">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Zip_Logo.svg" alt="Zip">
-        <!-- Add more payment method logos/icons as needed -->
-      </div>
-      <button type="button" id="confirm-payment">Confirm Payment</button>
-      <button type="button" id="back-to-products">Back to Products</button>
+       <div id="alternative-methods" style="display: none;">
+      <img src="https://getlogo.net/wp-content/uploads/2020/03/sofort-logo-vector.png" alt="SOFORT">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/IDEAL_Logo.png" alt="iDeal">
+      <img src="https://business.afterpay.com/rs/539-RJA-633/images/CP_logo_lockup_6328x2204_blackclear_png.png" alt="Clearpay">
+      <img src="https://docs.klarna.com/assets/media/502240a8-506e-44b3-84eb-d8e57609ab93/Marketing_Badge_With_Clear_Space.png" alt="Klarna">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bancontact_logo.svg/1280px-Bancontact_logo.svg.png" alt="BANCONTACT">
+      <img src="https://logowik.com/content/uploads/images/affirm9276.jpg" alt="Affirm">
+      <img src="https://logowik.com/content/uploads/images/sezzle4755.jpg" alt="Sezzle">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Zip_Logo.svg" alt="Zip">
+    </div>
+
+    <button id="confirm-payment">Confirm Payment</button>
+    <button id="back-to-products">Back to Products</button>
+
+    <!-- Success Message -->
+    <div id="payment-success">
+      <h2>Payment Successful</h2>
+      <p>Thank you for your order. You will be redirected back to the products page shortly.</p>
     </div>
   </main>
-  <div class="cart-container">
-    <button id="cart">Basket (0)</button>
-  </div>
-  <div id="payment-form" style="display: none;">
-    <iframe id="payment-iframe" src="about:blank" style="width:100%; height:600px; border:none;"></iframe>
-  </div>
-  <div id="payment-success">
-    <h2>Payment Successful</h2>
-    <p>Thank you for your order. You will be redirected back to the products page shortly.</p>
-    <button onclick="window.location.href='index.html'">Back to Products</button>
-  </div>
 
   <script src="payment.js"></script>
-  
-  <script>
-    // Handle payment success/failure based on URL parameters
-    document.addEventListener('DOMContentLoaded', function () {
-      const urlParams = new URLSearchParams(window.location.search);
-      const success = urlParams.get('success');
-      if (success === 'true') {
-        document.getElementById('payment-success').style.display = 'block';
-      } else if (success === 'false') {
-        alert('Payment failed. Please try again.');
-      }
-    });
 
-    // Example event listener for confirming payment
-    document.getElementById('confirm-payment').addEventListener('click', function () {
-      // Simulate successful payment and redirect with query params
-      window.location.href = 'index.html?success=true';
-    });
-  </script>
 </body>
 </html>
