@@ -2,7 +2,6 @@ class ApiClient {
   constructor(apiKey) {
     this.apiKey = apiKey;
   }
-
   async sendRequest(endpoint, method = 'POST', requestData = null, endpointType = 'hosted') {
     let baseUrl;
 
@@ -13,7 +12,6 @@ class ApiClient {
     } else {
       throw new Error('Invalid endpoint type');
     }
-
     const url = `${baseUrl}/${endpoint}`;
     const options = {
       method,
@@ -22,11 +20,9 @@ class ApiClient {
         'X-APIKEY': this.apiKey
       },
     };
-
     if (requestData) {
       options.body = JSON.stringify(requestData);
     }
-
     try {
       const response = await fetch(url, options);
       const contentType = response.headers.get("content-type");
@@ -47,16 +43,22 @@ class ApiClient {
   }
 }
 
-// Single declaration of the basket
-let basket = [];
+function handlePaymentResponse() {
+  // Get the productUrl query parameter from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const productUrl = urlParams.get('productUrl') || 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html';
 
-// Update basket count function
-const updateBasketCount = () => {
-  const cartButton = document.getElementById('cart');
-  cartButton.textContent = `Basket (${basket.length})`;
-};
+  // Redirect back to the products page
+  const productsSection = document.querySelector('.products');
+  if (productsSection) {
+    productsSection.style.display = 'flex';
+  } else {
+    window.location.href = productUrl;
+  }
 
-// Items definition (this array might be dynamic based on your products)
+  basket = [];
+}
+
 const items = [
   {
     product_id: "12345",
@@ -90,36 +92,53 @@ const items = [
   }
 ];
 
-// Add to basket functionality
-document.querySelectorAll('.add-to-basket').forEach(button => {
-  button.addEventListener('click', function () {
-    const product = {
-      name: this.getAttribute('data-name'),
-      amount: parseInt(this.getAttribute('data-amount'), 10)
-    };
-    basket.push(product);
-    updateBasketCount(); // Ensure this is called to update the UI
-  });
-});
+const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
+const apiClient = new ApiClient(apiKey);
+let paymentInitiated = false;
+let basket = [];
 
-// Payment methods setup
+const updateBasketCount = () => {
+  const cartButton = document.getElementById('cart');
+  cartButton.textContent = `Basket (${basket.length})`;
+};
 const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
-const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
-let selectedAlternativeMethod = null;
 
 paymentMethodRadios.forEach(radio => {
   radio.addEventListener('change', handlePaymentMethodChange);
 });
 
+const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
+let selectedAlternativeMethod = null;
+
 alternativeMethodLogos.forEach(logo => {
   logo.addEventListener('click', async () => {
     alternativeMethodLogos.forEach(otherLogo => otherLogo.classList.remove('selected'));
     logo.classList.add('selected');
-    selectedAlternativeMethod = logo.alt.toLowerCase(); // Set selectedAlternativeMethod to the alt attribute
+    selectedAlternativeMethod = logo.alt; // Set selectedAlternativeMethod to the alt attribute
+
+    // Call the respective payment initiation function
+    switch (selectedAlternativeMethod.toLowerCase()) {
+      case 'ideal':
+        await initiateidealPayment(basket);
+        break;
+      case 'sofort':
+        await initiateSofortPayment(basket);
+        break;
+      case 'klarna':
+        await initiateKlarnaPayment();
+        break;
+      case 'bancontact':
+        await initiateBancontactPayment(basket);
+        break;
+         case 'clearpay':
+        await initiateClearpayPayment(basket);
+        break;
+      default:
+        console.error('Invalid alternative payment method selected');
+    }
   });
 });
 
-// Handle payment method change
 function handlePaymentMethodChange() {
   const alternativeMethodsDiv = document.getElementById('alternative-methods');
   const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
@@ -133,15 +152,14 @@ function handlePaymentMethodChange() {
   }
 }
 
-// Handle payment success and redirection
-function handlePaymentSuccess() {
-  document.getElementById('payment-form').style.display = 'none';
-  document.getElementById('payment-success').style.display = 'block';
-
-  setTimeout(() => {
-    window.location.href = 'index.html';
-  }, 5000);
-}
+const displayPaymentForm = () => {
+  const paymentForm = document.getElementById('payment-form');
+  if (paymentForm) {
+    paymentForm.style.display = 'block';
+  } else {
+    console.error('Payment form not found');
+  }
+};
 
 // Initiate Klarna payment
 const initiateKlarnaPayment = async () => {
