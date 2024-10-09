@@ -573,14 +573,12 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('No payment method selected');
     }
   });
+const urlParams = new URLSearchParams(window.location.search);
+const success = urlParams.get('success');
 
-  // Check for success or failure parameters on load
-  const urlParams = new URLSearchParams(window.location.search);
-  const success = urlParams.get('success');
-
-  if (success === 'true') {
-    document.getElementById('payment-success').style.display = 'block';
-  } else if (success === 'false') {
-    alert('Payment failed. Please try again.');
-  }
+if (success === 'true') {
+  document.getElementById('payment-success').style.display = 'block';
+} else if (success === 'false') {
+  alert('Payment failed. Please try again.');
+}
 });
