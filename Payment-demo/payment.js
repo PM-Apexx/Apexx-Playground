@@ -44,20 +44,24 @@ class ApiClient {
   }
 }
 
-function handlePaymentResponse() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const productUrl = urlParams.get('productUrl') || 'index.html';
+let basket = [];
 
-  const productsSection = document.querySelector('.products');
-  if (productsSection) {
-    productsSection.style.display = 'flex';
-  } else {
-    window.location.href = productUrl;
-  }
+// Update basket count
+const updateBasketCount = () => {
+  const cartButton = document.getElementById('cart');
+  cartButton.textContent = `Basket (${basket.length})`;
+};
 
-  basket = [];
-  updateBasketCount();
-}
+document.querySelectorAll('.add-to-basket').forEach(button => {
+  button.addEventListener('click', function () {
+    const product = {
+      name: this.getAttribute('data-name'),
+      amount: parseInt(this.getAttribute('data-amount'), 10)
+    };
+    basket.push(product);
+    updateBasketCount();
+  });
+});
 
 
 const items = [
