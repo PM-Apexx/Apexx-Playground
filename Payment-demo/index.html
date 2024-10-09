@@ -232,6 +232,26 @@
     <p>Thank you for your order. You will be redirected back to the products page shortly.</p>
     <button onclick="window.location.href='index.html'">Back to Products</button>
   </div>
+
   <script src="payment.js"></script>
+  
+  <script>
+    // Handle payment success/failure based on URL parameters
+    document.addEventListener('DOMContentLoaded', function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const success = urlParams.get('success');
+      if (success === 'true') {
+        document.getElementById('payment-success').style.display = 'block';
+      } else if (success === 'false') {
+        alert('Payment failed. Please try again.');
+      }
+    });
+
+    // Example event listener for confirming payment
+    document.getElementById('confirm-payment').addEventListener('click', function () {
+      // Simulate successful payment and redirect with query params
+      window.location.href = 'index.html?success=true';
+    });
+  </script>
 </body>
 </html>
