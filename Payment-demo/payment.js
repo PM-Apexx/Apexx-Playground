@@ -47,27 +47,16 @@ class ApiClient {
   }
 }
 
+// Single declaration of the basket
 let basket = [];
 
-// Update basket count
+// Update basket count function
 const updateBasketCount = () => {
   const cartButton = document.getElementById('cart');
   cartButton.textContent = `Basket (${basket.length})`;
 };
 
-// Add to basket functionality
-document.querySelectorAll('.add-to-basket').forEach(button => {
-  button.addEventListener('click', function () {
-    const product = {
-      name: this.getAttribute('data-name'),
-      amount: parseInt(this.getAttribute('data-amount'), 10)
-    };
-    basket.push(product);
-    updateBasketCount();
-  });
-});
-
-// Items definition
+// Items definition (this array might be dynamic based on your products)
 const items = [
   {
     product_id: "12345",
@@ -101,15 +90,23 @@ const items = [
   }
 ];
 
-const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
-const apiClient = new ApiClient(apiKey);
+// Add to basket functionality
+document.querySelectorAll('.add-to-basket').forEach(button => {
+  button.addEventListener('click', function () {
+    const product = {
+      name: this.getAttribute('data-name'),
+      amount: parseInt(this.getAttribute('data-amount'), 10)
+    };
+    basket.push(product);
+    updateBasketCount(); // Ensure this is called to update the UI
+  });
+});
 
-// Payment method selection
+// Payment methods setup
 const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
 const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
 let selectedAlternativeMethod = null;
 
-// Handle payment method change
 paymentMethodRadios.forEach(radio => {
   radio.addEventListener('change', handlePaymentMethodChange);
 });
@@ -122,6 +119,7 @@ alternativeMethodLogos.forEach(logo => {
   });
 });
 
+// Handle payment method change
 function handlePaymentMethodChange() {
   const alternativeMethodsDiv = document.getElementById('alternative-methods');
   const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
