@@ -379,7 +379,69 @@ try {
     showError('Error initiating Bancontact payment. Please try again.');
   }
 };
+ const initiateCardPayment = async (basket) => {
+  if (!paymentInitiated) {
+    const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+    const paymentData = {
+      organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+      currency: 'GBP',
+      amount: totalAmount,
+      capture_now: true,
+      dynamic_descriptor: 'Demo Merchant Test Purchase',
+      merchant_reference: 'ref_' + Date.now(),
+      return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
+      webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
+      transaction_type: 'first',
+      duplicate_check: false,
+      locale: 'en_GB',
+      card: {
+        create_token: false
+      },
+      billing_address: {
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'john.doe@example.com',
+        address: '123 Main Street',
+        city: 'London',
+        state: 'London',
+        postal_code: 'SW1A 1AA',
+        country: 'GB',
+        phone: '441234567890'
+      },
+      three_ds: {
+        three_ds_required: false,
+        three_ds_version: '2.0'
+      }
+    };
 
+    try {
+      const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
+      if (responseData && responseData.url) {
+        const paymentIframe = document.getElementById('payment-iframe');
+        if (paymentIframe) {
+          paymentIframe.onload = () => {
+            paymentIframe.style.display = 'block';
+          };
+          paymentIframe.src = responseData.url;
+        } else {
+          console.error('Payment iframe not found');
+        }
+        const paymentForm = document.getElementById('payment-form');
+        if (paymentForm) {
+          paymentForm.style.display = 'block';
+        }
+        paymentInitiated = true;
+      } else {
+        showError('Failed to initiate payment');
+      }
+    } catch (error) {
+      console.error('Payment initiation failed:', error);
+      showError('Error initiating payment. Please try again.');
+    }
+  } else {
+    console.log('Payment has already been initiated.');
+  }
+};
 const initiateidealPayment = async (basket) => {
 const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
 const paymentData = {
