@@ -106,13 +106,19 @@
       position: fixed;
       right: 20px;
       top: 20px;
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     #cart {
+      background: url('https://cdn-icons-png.flaticon.com/512/1170/1170678.png') no-repeat left center;
       background-size: 24px 24px;
-      padding-left: 30px;
+      padding-left: 40px;
       border: none;
       color: #333;
+      font-size: 16px;
     }
 
     fieldset {
@@ -172,6 +178,12 @@
       <a href="https://www.postman.com/flight-cosmonaut-99887655/workspace/apexx-workspace/overview">Postman</a>
     </nav>
   </header>
+  
+  <!-- Basket button -->
+  <div class="cart-container">
+    <button id="cart">Basket (0)</button>
+  </div>
+  
   <main class="container">
     <div class="products active">
       <!-- Product 1 -->
@@ -198,6 +210,7 @@
         <button class="add-to-basket" data-amount="30000" data-name="Wireless Speaker">Add to Basket</button>
       </section>
     </div>
+    
     <div class="payment-methods" id="payment-options-page">
       <h2>Choose Payment Method</h2>
       <label>
@@ -206,28 +219,28 @@
       <label>
         <input type="radio" name="payment-method" value="alternative"> Pay with other Alternative Payments
       </label>
-       <div id="alternative-methods" style="display: none;">
-      <img src="https://getlogo.net/wp-content/uploads/2020/03/sofort-logo-vector.png" alt="SOFORT">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/IDEAL_Logo.png" alt="iDeal">
-      <img src="https://business.afterpay.com/rs/539-RJA-633/images/CP_logo_lockup_6328x2204_blackclear_png.png" alt="Clearpay">
-      <img src="https://docs.klarna.com/assets/media/502240a8-506e-44b3-84eb-d8e57609ab93/Marketing_Badge_With_Clear_Space.png" alt="Klarna">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bancontact_logo.svg/1280px-Bancontact_logo.svg.png" alt="BANCONTACT">
-      <img src="https://logowik.com/content/uploads/images/affirm9276.jpg" alt="Affirm">
-      <img src="https://logowik.com/content/uploads/images/sezzle4755.jpg" alt="Sezzle">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Zip_Logo.svg" alt="Zip">
-    </div>
+      <div id="alternative-methods">
+        <img src="https://getlogo.net/wp-content/uploads/2020/03/sofort-logo-vector.png" alt="SOFORT">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/IDEAL_Logo.png" alt="iDeal">
+        <img src="https://business.afterpay.com/rs/539-RJA-633/images/CP_logo_lockup_6328x2204_blackclear_png.png" alt="Clearpay">
+        <img src="https://docs.klarna.com/assets/media/502240a8-506e-44b3-84eb-d8e57609ab93/Marketing_Badge_With_Clear_Space.png" alt="Klarna">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bancontact_logo.svg/1280px-Bancontact_logo.svg.png" alt="BANCONTACT">
+        <img src="https://logowik.com/content/uploads/images/affirm9276.jpg" alt="Affirm">
+        <img src="https://logowik.com/content/uploads/images/sezzle4755.jpg" alt="Sezzle">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Zip_Logo.svg" alt="Zip">
+      </div>
 
-    <button id="confirm-payment">Confirm Payment</button>
-    <button id="back-to-products">Back to Products</button>
+      <button id="confirm-payment">Confirm Payment</button>
+      <button id="back-to-products">Back to Products</button>
 
-    <!-- Success Message -->
-    <div id="payment-success">
-      <h2>Payment Successful</h2>
-      <p>Thank you for your order. You will be redirected back to the products page shortly.</p>
+      <!-- Success Message -->
+      <div id="payment-success">
+        <h2>Payment Successful</h2>
+        <p>Thank you for your order. You will be redirected back to the products page shortly.</p>
+      </div>
     </div>
   </main>
 
   <script src="payment.js"></script>
-
 </body>
 </html>
