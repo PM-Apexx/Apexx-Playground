@@ -45,11 +45,9 @@ class ApiClient {
 }
 
 function handlePaymentResponse() {
-  // Get the productUrl query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
-  const productUrl = urlParams.get('productUrl') || 'https://pm-demo-e0926.web.app/';
+  const productUrl = urlParams.get('productUrl') || 'index.html';
 
-  // Redirect back to the products page
   const productsSection = document.querySelector('.products');
   if (productsSection) {
     productsSection.style.display = 'flex';
@@ -57,10 +55,10 @@ function handlePaymentResponse() {
     window.location.href = productUrl;
   }
 
-  // Clear the basket and update the basket count after successful payment
   basket = [];
   updateBasketCount();
 }
+
 
 const items = [
   {
@@ -154,14 +152,12 @@ function handlePaymentMethodChange() {
     selectedAlternativeMethod = null;
   }
 }
-function handlePaymentSuccess() {
-  // Hide the payment form
-  document.getElementById('payment-form').style.display = 'none';
 
-  // Show the payment success message
+// Handle payment success
+function handlePaymentSuccess() {
+  document.getElementById('payment-form').style.display = 'none';
   document.getElementById('payment-success').style.display = 'block';
 
-  // Redirect to the products page after a delay (e.g., 5 seconds)
   setTimeout(() => {
     window.location.href = 'index.html';
   }, 5000);
@@ -200,10 +196,10 @@ const initiateKlarnaPayment = async () => {
         }
       ]
     },
-    redirect_urls: {
-      success: 'https://pm-demo-e0926.web.app/payment-demo/payment-success.html?returnUrl=https://https://pm-demo-e0926.web.app/payment-demo/index.html',
-      failed: 'https://pm-demo-e0926.web.app/Apexx-Playground/Payment-demo/payment-response.html',
-      cancelled:'https://pm-demo-e0926.web.app/Apexx-Playground/Payment-demo/payment-response.html'
+   redirect_urls: {
+      success: 'index.html?success=true',
+      failed: 'index.html?success=false',
+      cancelled: 'index.html?success=false'
     },
     items: items,
     customer: {
@@ -286,9 +282,9 @@ const initiateClearpayPayment = async () => {
       ]
     },
     redirect_urls: {
-      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
-      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
-      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
+      success: 'index.html?success=true',
+      failed: 'index.html?success=false',
+      cancelled: 'index.html?success=false'
     },
     items: items,
     customer: {
@@ -587,14 +583,28 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
     console.error('No payment method selected');
   }
 });
+// Add items to basket
 document.querySelectorAll('.add-to-basket').forEach(button => {
-    button.addEventListener('click', function() {
-      const product = {
-        name: this.getAttribute('data-name'),
-        amount: parseInt(this.getAttribute('data-amount'), 10)
-      };
-      basket.push(product);
-      updateBasketCount();
-    });
+  button.addEventListener('click', function () {
+    const product = {
+      name: this.getAttribute('data-name'),
+      amount: parseInt(this.getAttribute('data-amount'), 10)
+    };
+    basket.push(product);
+    updateBasketCount();
+  });
+});
+
+// Check for success or failure parameters on load
+document.addEventListener('DOMContentLoaded', function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const success = urlParams.get('success');
+  
+  if (success === 'true') {
+    document.getElementById('payment-success').style.display = 'block';
+  } else if (success === 'false') {
+    alert('Payment failed. Please try again.');
+  }
+});
   });
 });
