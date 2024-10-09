@@ -13,6 +13,7 @@ class ApiClient {
     } else {
       throw new Error('Invalid endpoint type');
     }
+
     const url = `${baseUrl}/${endpoint}`;
     const options = {
       method,
@@ -21,9 +22,11 @@ class ApiClient {
         'X-APIKEY': this.apiKey
       },
     };
+
     if (requestData) {
       options.body = JSON.stringify(requestData);
     }
+
     try {
       const response = await fetch(url, options);
       const contentType = response.headers.get("content-type");
@@ -52,6 +55,7 @@ const updateBasketCount = () => {
   cartButton.textContent = `Basket (${basket.length})`;
 };
 
+// Add to basket functionality
 document.querySelectorAll('.add-to-basket').forEach(button => {
   button.addEventListener('click', function () {
     const product = {
@@ -63,7 +67,7 @@ document.querySelectorAll('.add-to-basket').forEach(button => {
   });
 });
 
-
+// Items definition
 const items = [
   {
     product_id: "12345",
@@ -99,48 +103,22 @@ const items = [
 
 const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
 const apiClient = new ApiClient(apiKey);
-let paymentInitiated = false;
-let basket = [];
 
-const updateBasketCount = () => {
-  const cartButton = document.getElementById('cart');
-  cartButton.textContent = `Basket (${basket.length})`;
-};
+// Payment method selection
 const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
+const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
+let selectedAlternativeMethod = null;
 
+// Handle payment method change
 paymentMethodRadios.forEach(radio => {
   radio.addEventListener('change', handlePaymentMethodChange);
 });
-
-const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
-let selectedAlternativeMethod = null;
 
 alternativeMethodLogos.forEach(logo => {
   logo.addEventListener('click', async () => {
     alternativeMethodLogos.forEach(otherLogo => otherLogo.classList.remove('selected'));
     logo.classList.add('selected');
-    selectedAlternativeMethod = logo.alt; // Set selectedAlternativeMethod to the alt attribute
-
-    // Call the respective payment initiation function
-    switch (selectedAlternativeMethod.toLowerCase()) {
-      case 'ideal':
-        await initiateidealPayment(basket);
-        break;
-      case 'sofort':
-        await initiateSofortPayment(basket);
-        break;
-      case 'klarna':
-        await initiateKlarnaPayment();
-        break;
-      case 'bancontact':
-        await initiateBancontactPayment(basket);
-        break;
-      case 'clearpay':
-        await initiateClearpayPayment(basket);
-        break;
-      default:
-        console.error('Invalid alternative payment method selected');
-    }
+    selectedAlternativeMethod = logo.alt.toLowerCase(); // Set selectedAlternativeMethod to the alt attribute
   });
 });
 
@@ -157,7 +135,7 @@ function handlePaymentMethodChange() {
   }
 }
 
-// Handle payment success
+// Handle payment success and redirection
 function handlePaymentSuccess() {
   document.getElementById('payment-form').style.display = 'none';
   document.getElementById('payment-success').style.display = 'block';
@@ -166,15 +144,8 @@ function handlePaymentSuccess() {
     window.location.href = 'index.html';
   }, 5000);
 }
-const displayPaymentForm = () => {
-  const paymentForm = document.getElementById('payment-form');
-  if (paymentForm) {
-    paymentForm.style.display = 'block';
-  } else {
-    console.error('Payment form not found');
-  }
-};
 
+// Initiate Klarna payment
 const initiateKlarnaPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
@@ -188,62 +159,16 @@ const initiateKlarnaPayment = async () => {
     locale: 'EN',
     customer_ip: '127.5.5.1',
     user_agent: 'string',
-    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
-    shopper_interaction: 'ecommerce',
-    bnpl: {
-      payment_method: 'klarna',
-      payment_type: '',
-      payment_type_data: [
-        {
-          key_name: 'string',
-          value: 'string'
-        }
-      ]
-    },
-   redirect_urls: {
-      success: 'index.html?success=true',
-      failed: 'index.html?success=false',
-      cancelled: 'index.html?success=false'
+    redirect_urls: {
+      success: 'payment-response.html?success=true',
+      failed: 'payment-response.html?success=false',
+      cancelled: 'payment-response.html?success=false'
     },
     items: items,
     customer: {
-      customer_identification_number: 'string',
-      identification_type: 'SSN',
-      email: 'jong4@mailinator.com',
-      phone: '07777012356',
-      salutation: 'Mr',
-      type: 'company',
-      date_of_birth: '2020-02-02',
-      customer_number: 'string',
-      gender: 'male',
-      employment_type: 'fulltime',
-      residential_status: 'homeowner'
-    },
-    billing_address: {
-      first_name: 'Hello',
-      last_name: 'Anderson',
-      email: 'abc',
-      address: 'string',
-      city: 'Birmingham',
-      state: 'West Mids',
-      postal_code: 'B5 1ST',
-      country: 'GB',
-      phone: '07777123555'
-    },
-    delivery_address: {
       first_name: 'Tester',
       last_name: 'McTestface',
-      phone: '07777132462',
-      salutation: 'Mr',
-      type: 'company',
-      care_of: 'string',
-      address: '38 Piccadilly',
-      address2: 'string',
-      city: 'Bradford',
-      state: 'West Yorkshire',
-      postal_code: 'BD1 3LY',
-      country: 'GB',
-      method: 'delivery'
+      email: 'tester@example.com'
     }
   };
 
@@ -252,13 +177,13 @@ const initiateKlarnaPayment = async () => {
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
     } else {
-      showError('Failed to initiate Klarna payment');
+      alert('Failed to initiate Klarna payment');
     }
   } catch (error) {
     console.error('Klarna payment initiation failed:', error);
-    showError('Error initiating Klarna payment. Please try again.');
   }
 };
+
 
 const initiateClearpayPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
