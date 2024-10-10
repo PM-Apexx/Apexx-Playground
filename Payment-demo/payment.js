@@ -530,6 +530,7 @@ const basketButton = document.getElementById('cart');
     const selectedMethodRadio = document.querySelector('input[name="payment-method"]:checked');
     if (selectedMethodRadio) {
       const selectedMethod = selectedMethodRadio.value;
+      console.log("Selected payment method: ", selectedMethod);
       switch (selectedMethod) {
         case 'card':
           await initiateCardPayment(basket);
@@ -538,6 +539,7 @@ const basketButton = document.getElementById('cart');
           const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
           if (selectedAlternativeMethod) {
             const methodName = selectedAlternativeMethod.alt.toLowerCase();
+            console.log("Initiating payment for method: ", methodName);
             switch (methodName) {
               case 'ideal':
                 await initiateidealPayment(basket);
