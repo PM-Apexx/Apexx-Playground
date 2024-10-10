@@ -494,11 +494,8 @@ const initiateSofortPayment = async (basket) => {
     sofort: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-         redirect_urls: {
-      success: 'payment-response.html?success=true',
-      failed: 'payment-response.html?success=false',
-      cancelled: 'payment-response.html?success=false'
-    },
+        return_url: 'payment-response.html?success=true'
+      } 
     },
     customer: {
       first_name: 'AP',
