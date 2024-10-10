@@ -185,10 +185,10 @@ const initiateKlarnaPayment = async () => {
         }
       ]
     },
-    redirect_urls: {
-      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
-      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
-      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
+     redirect_urls: {
+      success: 'payment-response.html?success=true',
+      failed: 'payment-response.html?success=false',
+      cancelled: 'payment-response.html?success=false'
     },
     items: items,
     customer: {
@@ -494,8 +494,11 @@ const initiateSofortPayment = async (basket) => {
     sofort: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'
-      } 
+         redirect_urls: {
+      success: 'payment-response.html?success=true',
+      failed: 'payment-response.html?success=false',
+      cancelled: 'payment-response.html?success=false'
+    },
     },
     customer: {
       first_name: 'AP',
