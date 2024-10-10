@@ -156,16 +156,62 @@ const initiateKlarnaPayment = async () => {
     locale: 'EN',
     customer_ip: '127.5.5.1',
     user_agent: 'string',
-    redirect_urls: {
-      success: 'payment-response.html?success=true',
-      failed: 'payment-response.html?success=false',
-      cancelled: 'payment-response.html?success=false'
+    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
+    shopper_interaction: 'ecommerce',
+    bnpl: {
+      payment_method: 'klarna',
+      payment_type: '',
+      payment_type_data: [
+        {
+          key_name: 'string',
+          value: 'string'
+        }
+      ]
+    },
+     redirect_urls: {
+      success: 'index.html?success=true',
+      failed: 'index.html?success=false',
+      cancelled: 'index.html?success=false'
     },
     items: items,
     customer: {
+      customer_identification_number: 'string',
+      identification_type: 'SSN',
+      email: 'jong4@mailinator.com',
+      phone: '07777012356',
+      salutation: 'Mr',
+      type: 'company',
+      date_of_birth: '2020-02-02',
+      customer_number: 'string',
+      gender: 'male',
+      employment_type: 'fulltime',
+      residential_status: 'homeowner'
+    },
+    billing_address: {
+      first_name: 'Hello',
+      last_name: 'Anderson',
+      email: 'abc',
+      address: 'string',
+      city: 'Birmingham',
+      state: 'West Mids',
+      postal_code: 'B5 1ST',
+      country: 'GB',
+      phone: '07777123555'
+    },
+    delivery_address: {
       first_name: 'Tester',
       last_name: 'McTestface',
-      email: 'tester@example.com'
+      phone: '07777132462',
+      salutation: 'Mr',
+      type: 'company',
+      care_of: 'string',
+      address: '38 Piccadilly',
+      address2: 'string',
+      city: 'Bradford',
+      state: 'West Yorkshire',
+      postal_code: 'BD1 3LY',
+      country: 'GB',
+      method: 'delivery'
     }
   };
 
@@ -174,10 +220,11 @@ const initiateKlarnaPayment = async () => {
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
     } else {
-      alert('Failed to initiate Klarna payment');
+      showError('Failed to initiate Klarna payment');
     }
   } catch (error) {
     console.error('Klarna payment initiation failed:', error);
+    showError('Error initiating Klarna payment. Please try again.');
   }
 };
 
