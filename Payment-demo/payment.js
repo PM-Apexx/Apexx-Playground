@@ -494,7 +494,7 @@ const initiateSofortPayment = async (basket) => {
     sofort: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-        return_url: 'payment-response.html?success=true'
+        return_url: 'https://pm-demo-e0926.firebaseapp.com/'
       } 
     },
     customer: {
